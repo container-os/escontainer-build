@@ -1,0 +1,9 @@
+Introduction
+------------
+
+The escore-build project builds everything in a clean mock chroot
+environment just like redhat/centos does. 
+
+The iso build process is based on lorax - a open source iso build
+tool from redhat/centos.  The result iso is anaconda install iso -
+yet another redhat/centos open source software.
