@@ -3,7 +3,7 @@
 # Run the common jobs first.
 source ./common.sh
 
-# In order to create iso image, We create buildiso directory relative to chroot.
+# In order to create iso image, we create buildiso directory relative to chroot.
 /usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --chroot "rm -rf /buildiso; mkdir /buildiso"
 
 # Copy the packages into mock environment and we will use them to create installation iso image.
