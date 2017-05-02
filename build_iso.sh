@@ -3,6 +3,9 @@
 # Run the common jobs first.
 source ./common.sh
 
+# Use rsync to sync ESCore packages for iso image.
+rsync -avrtHu --delete rsync://localhost/escore_repo ./escore_repo
+
 # In order to create iso image, we create buildiso directory relative to chroot.
 /usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --chroot "rm -rf /buildiso; mkdir /buildiso"
 
