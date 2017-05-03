@@ -1,3 +1,5 @@
+-----------------------------------------------------------------------------------
+
 Introduction
 ------------
 
@@ -18,3 +20,14 @@ Note
    This can be done with the following command:
 
      $ sudo /usr/sbin/usermod -a -G mock $USER
+
+2. During the process we need stuff provided by http and rsync services from remote.
+   So make sure that the services are available on the server and the directory
+   locations are correct.
+
+     http://[remote]/ESCore/CentOS/7.3.1611/os
+     http://[remote]/ESCore/CentOS/7.3.1611/updates
+     http://[remote]/ESCore/CentOS/7.3.1611/easystack
+     rsync://[remote]/escore_repo
+
+-----------------------------------------------------------------------------------
