@@ -11,6 +11,31 @@ tool from redhat/centos.  The result iso is anaconda install iso -
 yet another redhat/centos open source software.
 
 
+Scripts
+-------
+
+setup.sh:
+ -> Initialize mock environment.
+
+build_iso.sh:
+ -> Build ESCore iso image.
+
+make_repos.sh:
+ -> Create all the repositories for mock / installer / iso environment.
+    Someone hast to migrate the result repos to the server for the
+    httpd and rsyncd services.
+
+shell.sh:
+ -> Enter mock environment if one would like to try some commands.
+
+common.sh:
+ -> This contains necessary settings and variables.
+    All other shell scripts are supposed to source it.
+
+scrubs.sh:
+ -> Cleanup all the mock cache stuff.
+
+
 Note
 ----
 
