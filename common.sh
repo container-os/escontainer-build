@@ -5,3 +5,8 @@
 # Our solution here is to force locale to be en_US and this is able to
 # make our escore-build process more general on any other machines.
 export LANG=en_US
+
+# Assign the server that is supposed to have http and rsync services.
+# This field will be used in setup.sh and build_iso.sh for accessing
+# all the rpm packages.
+SERVER=localhost
