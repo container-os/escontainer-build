@@ -11,5 +11,6 @@ export LANG=en_US
 # all the rpm packages.
 SERVER=10.60.0.129
 
-# Make an array that includes all the EasyStack packages.
+# Set the git repo location and a list of required packages.
+REPO_LOCATION=git@github.com:jasonwucj
 REPO_ARRAY=(lorax anaconda centos-release centos-logos yum)

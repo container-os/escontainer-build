@@ -17,7 +17,7 @@ mkdir -p ${ES_PACKAGES_DIR}
 # Clone all the necessary EasyStack packages and build rpm.
 cd ${ES_PKG_SRC_DIR}
 for REPO in ${REPO_ARRAY[@]}; do
-  git clone git@github.com:jasonwucj/${REPO}.git
+  git clone ${REPO_LOCATION}/${REPO}.git
   # For each package, we call rpmgen.sh to create its rpm and source rpm.
   cd ./${REPO}/
   ./rpmgen.sh
