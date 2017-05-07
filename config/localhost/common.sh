@@ -10,3 +10,6 @@ export LANG=en_US
 # This field will be used in setup.sh and build_iso.sh for accessing
 # all the rpm packages.
 SERVER=localhost
+
+# Make an array that includes all the EasyStack packages.
+REPO_ARRAY=(lorax anaconda centos-release centos-logos yum)

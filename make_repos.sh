@@ -3,9 +3,6 @@
 # Run the common jobs first.
 source ./common.sh
 
-# Make an array that includes all the EasyStack packages.
-REPO_ARRAY=(lorax anaconda centos-release centos-logos yum)
-
 # Set directory variables.
 ES_TOP_DIR=`pwd`/easystack/
 ES_PKG_SRC_DIR=`pwd`/easystack/pkg_src/
