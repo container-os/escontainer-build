@@ -12,6 +12,10 @@ rsync -avrtHu --delete rsync://${SERVER}/escore_repo ./escore_repo
 # Copy the packages into mock environment and we will use them to create installation iso image.
 /usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyin escore_repo/ /buildiso/repo
 
+# We need install our EasyStack lorax which is modified
+# to build ESCore installation iso.
+/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --install ${SERVER_EASYSTACK_REPO}/Packages/lorax-19.6.78-1.el7.1.x86_64.rpm
+
 # Issue the lorax command to create iso image.
 # Instead of using --shell, we use --chroot because it can be logged
 # under /var/lib/mock/ and the --cwd is able to take effect.

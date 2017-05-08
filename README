@@ -15,11 +15,8 @@ Scripts
 -------
 
 setup.sh:
- -> Copy the necessary settings that user specifies.
+ -> Copy the necessary settings and initialize mock environment.
     This script should be used before running other scripts.
-
-init_mock.sh:
- -> Initialize mock environment.
 
 build_iso.sh:
  -> Build ESCore iso image.
