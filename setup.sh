@@ -12,3 +12,4 @@ fi
 
 cp `pwd`/config/${1}/centos-7-x86_64.cfg .
 cp `pwd`/config/${1}/common.sh .
+echo "Copying settings ...... DONE."
