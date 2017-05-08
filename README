@@ -4,7 +4,7 @@ Introduction
 ------------
 
 The escore-build project builds everything in a clean mock chroot
-environment just like redhat/centos does. 
+environment just like redhat/centos does.
 
 The iso build process is based on lorax - a open source iso build
 tool from redhat/centos.  The result iso is anaconda install iso -
@@ -15,14 +15,18 @@ Scripts
 -------
 
 setup.sh:
+ -> Copy the necessary settings that user specifies.
+    This script should be used before running other scripts.
+
+init_mock.sh:
  -> Initialize mock environment.
 
 build_iso.sh:
  -> Build ESCore iso image.
 
 make_repos.sh:
- -> Create all the repositories for mock / installer / iso environment.
-    Someone hast to migrate the result repos to the server for the
+ -> Create easystack repository for mock / installer / iso environment.
+    Someone has to migrate the result repos to the server for the
     httpd and rsyncd services.
 
 shell.sh:
@@ -32,8 +36,8 @@ common.sh:
  -> This contains necessary settings and variables.
     All other shell scripts are supposed to source it.
 
-scrubs.sh:
- -> Cleanup all the mock cache stuff.
+clean.sh:
+ -> Cleanup mock cache and all the stuff we created.
 
 
 Note
