@@ -4,33 +4,31 @@
 source ./common.sh
 
 # Set directory variables.
-ES_TOP_DIR=`pwd`/easystack/
-ES_PKG_SRC_DIR=`pwd`/easystack/pkg_src/
-ES_PACKAGES_DIR=`pwd`/easystack/Packages/
+ES_PKGSRC_DIR=`pwd`/easystack/pkg_src/
+ES_X8664_DIR=`pwd`/easystack/x86_64/
+ES_X8664_PACKAGES_DIR=`pwd`/easystack/x86_64/Packages/
 
 # First we create necessary directories.
 #   pkg_src is the location where we clone the repo.
 #   Packages is the location where we place all the binary rpm files.
-mkdir -p ${ES_PKG_SRC_DIR}
-mkdir -p ${ES_PACKAGES_DIR}
+mkdir -p ${ES_PKGSRC_DIR}
+mkdir -p ${ES_X8664_DIR}
+mkdir -p ${ES_X8664_PACKAGES_DIR}
 
 # Clone all the necessary EasyStack packages and build rpm.
-cd ${ES_PKG_SRC_DIR}
+cd ${ES_PKGSRC_DIR}
 for REPO in ${REPO_ARRAY[@]}; do
   git clone ${REPO_LOCATION}/${REPO}.git
   # For each package, we call rpmgen.sh to create its rpm and source rpm.
   cd ./${REPO}/
   ./rpmgen.sh
-  # Find all the binary rpm files and copy them into ES_PACKAGES_DIR directory.
+  # Find all the binary rpm files and copy them into ES_X8664_PACKAGES_DIR directory.
   # Note that we employ "-exec" with ending "\;" to perform file copy operation.
   # See the manpage of find command for the details.
-  find ./RPMS -name *.rpm -exec cp {} ${ES_PACKAGES_DIR} \;
-  cd ${ES_PKG_SRC_DIR}
+  find ./RPMS -name *.rpm -exec cp {} ${ES_X8664_PACKAGES_DIR} \;
+  cd ${ES_PKGSRC_DIR}
 done
 
-# The package sources can be removed now.
-rm -rf ${ES_PKG_SRC_DIR}
-
-# Create repodata under ES_TOP_DIR directory.
-cd ${ES_TOP_DIR}
+# Create repodata under ES_X8664_DIR directory.
+cd ${ES_X8664_DIR}
 createrepo -v -o ./ ./
