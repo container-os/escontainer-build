@@ -4,9 +4,12 @@
 # The available confiurations can be found under ./config/ directory.
 # Then we will copy the settings to current location so that
 # other shell scripts are able to use them.
-if [ -z ${1} ]; then
-  echo "Please specify a configuration! Such as 'localhost' or '10.60.0.129'."
-  echo "Check ./config/ for the available configurations."
+if [ ${#} -ne 1 ]; then
+  echo ""
+  echo "Usage: ${0} CONFIG"
+  echo ""
+  echo "  CONFIG	check ./config/ for available configurations"
+  echo ""
   exit 1
 fi
 
