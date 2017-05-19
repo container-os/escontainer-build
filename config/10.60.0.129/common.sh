@@ -16,5 +16,5 @@ SERVER_UPDATES_REPO=http://${SERVER}/ESCore/CentOS/7.3.1611/updates/x86_64/
 SERVER_EASYSTACK_REPO=http://${SERVER}/ESCore/CentOS/7.3.1611/easystack/x86_64/
 
 # Set the git repo location and a list of required packages.
-REPO_LOCATION=git@github.com:jasonwucj
+REPO_LOCATION=git@github.com:easystack
 REPO_ARRAY=(lorax anaconda centos-release centos-logos yum)
