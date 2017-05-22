@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # User must specify one configuration.
-# The available confiurations can be found under ./config/ directory.
+# The available configurations can be found under ./config/ directory.
 # Then we will copy the settings to current location so that
 # other shell scripts are able to use them.
 if [ ${#} -ne 1 ]; then
