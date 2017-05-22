@@ -20,8 +20,8 @@ mkdir -p ${ES_X8664_DIR}
 mkdir -p ${ES_X8664_PACKAGES_DIR}
 
 # Clone all the necessary EasyStack packages and build rpm.
-cd ${ES_PKGSRC_DIR}
 for REPO in ${REPO_ARRAY[@]}; do
+  cd ${ES_PKGSRC_DIR}
   git clone ${REPO_LOCATION}/${REPO}.git
   # For each package, we call rpmgen_mock.sh to create its source rpm
   # and binary rpm under mock environment.
@@ -31,7 +31,6 @@ for REPO in ${REPO_ARRAY[@]}; do
   # Note that we employ "-exec" with ending "\;" to perform file copy operation.
   # See the manpage of find command for the details.
   find ./RPMS -name *.rpm -exec cp {} ${ES_X8664_PACKAGES_DIR} \;
-  cd ${ES_PKGSRC_DIR}
 done
 
 # Create repodata under ES_X8664_DIR directory.
