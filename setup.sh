@@ -32,21 +32,42 @@ do
 done
 
 
-# Copy the configuration files.
-cp `pwd`/config/${SET_CONFIG}/centos-7-x86_64.cfg .
-cp `pwd`/config/${SET_CONFIG}/common.sh .
-echo "Copying settings ...... DONE."
+# Check if the directory exist and then copy configuration files.
+if [ -d `pwd`/config/${SET_CONFIG} ]; then
+  cp `pwd`/config/${SET_CONFIG}/centos-7-x86_64.cfg .
+  cp `pwd`/config/${SET_CONFIG}/common.sh .
+  echo "Copying settings ...... DONE."
+else
+  echo "The configuration '${SET_CONFIG}' does not exist!"
+  echo "Please check available configurations under ./config/ directory."
+  exit 1
+fi
 
-# Substitute SERVER field if user specifies it.
-# Also we need to use double quotes so that
+# If the option --server= is specified, substitute SERVER field in common.sh.
+# Also we need to use double quotes in sed command so that
 # the variable within string can be evaluated.
 if [ -n "${SET_SERVER}" ]; then
   sed -i "s/^SERVER=.*/SERVER=${SET_SERVER}/g" common.sh
-  echo "Setting SERVER ...... DONE."
+  echo "Setting SERVER in common.sh ...... DONE."
 fi
 
 # Run the common jobs first.
 source ./common.sh
+
+# At this point we have variables from common.sh:
+#   SERVER_OS_REPO
+#   SERVER_UPDATES_REPO
+#   SERVER_EASYSTACK_REPO
+# If the option --server= is specified, we need to use
+# sed command to modify baseurl field in the centos-7-x86_64.cfg.
+# Note that we take '#' as sed option delimiter to avoid bad effect
+# of '/' characters in the variables.
+if [ -n "${SET_SERVER}" ]; then
+  sed -i "s#baseurl='.*os/x86_64/'#baseurl='${SERVER_OS_REPO}'#g" centos-7-x86_64.cfg
+  sed -i "s#baseurl='.*updates/x86_64/'#baseurl='${SERVER_UPDATES_REPO}'#g" centos-7-x86_64.cfg
+  sed -i "s#baseurl='.*easystack/x86_64/'#baseurl='${SERVER_EASYSTACK_REPO}'#g" centos-7-x86_64.cfg
+  echo "Setting SERVER in centos-7-x86_64.cfg ...... DONE."
+fi
 
 # Initialize mock environment.
 /usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --init
