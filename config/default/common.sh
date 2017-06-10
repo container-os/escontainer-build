@@ -17,4 +17,4 @@ SERVER_EASYSTACK_REPO=http://${SERVER}/ESCore/CentOS/7.3.1611/easystack/x86_64/
 
 # Set the git repo location and a list of required packages.
 REPO_LOCATION=git@github.com:easystack
-REPO_ARRAY=(lorax anaconda escore-release escore-logos yum qemu-kvm libvirt)
+REPO_ARRAY=(lorax anaconda escore-release escore-logos yum qemu-kvm libvirt escore_kernel)
