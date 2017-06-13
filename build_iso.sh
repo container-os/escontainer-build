@@ -3,14 +3,35 @@
 # Run the common jobs first.
 source ./common.sh
 
-# Use rsync to sync ESCore packages for iso image.
-rsync -avrtHu --delete rsync://${SERVER}/escore_repo ./escore_repo
+# === Step 1: Preparation of escore_repo content ===
 
-# In order to create iso image, we create buildiso directory relative to chroot.
+# In order to create iso image, we create /buildiso directory relative to chroot.
+# We also create /buildiso/escore_repo and /buildiso/escore_repo/Packages for the preparation of escore_repo construction.
 /usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --chroot "rm -rf /buildiso; mkdir /buildiso"
+/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --chroot "mkdir /buildiso/escore_repo; mkdir /buildiso/escore_repo/Packages"
 
-# Copy the packages into mock environment and those rpm files will be included in the iso image.
-/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyin escore_repo/ /buildiso/escore_repo
+# Under mock environment, we need to copy escore-packages-list and escore-comps.xml into it.
+# The list contains all the packages we would like to use yumdownloader to download it.
+# The xml file is the group file which will be used for creating repodata.
+/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyin escore-packages-list /buildiso/escore_repo/Packages/packages-list
+/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyin escore-comps.xml /buildiso/escore_repo/comps.xml
+
+# Use yumdownloader to download all the rpm files under mock environment.
+# It takes yum repo settings specified in centos-7-x86_64.cfg so that
+# we can make sure we will get the up-to-date packages.
+/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso/escore_repo/Packages" \
+--chroot 'cat packages-list | while read os_package; do yumdownloader ${os_package}; done'
+
+# So far we only support x86_64 packages.
+# Delete all other *.i686.rpm files.
+/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso/escore_repo/Packages" \
+--chroot 'rm -f *.i686.rpm'
+
+# Create repodata with corresponding group file.
+/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso/escore_repo" \
+--chroot 'createrepo -g comps.xml ./ -o ./'
+
+# === Step 2: Use lorax to create ESCore iso image ===
 
 # We need install our EasyStack lorax which is modified to build ESCore installation iso.
 /usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --install ${SERVER_EASYSTACK_REPO}/Packages/lorax-19.6.78-1.el7.1.x86_64.rpm
@@ -20,7 +41,7 @@ rsync -avrtHu --delete rsync://${SERVER}/escore_repo ./escore_repo
 # under /var/lib/mock/ and the --cwd is able to take effect.
 # Also, our lorax support --customfield option and we can use it to specify the escore rpm files
 # which will be included in the iso image so that we have local media repository at installation stage.
-/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="buildiso" \
+/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso" \
 --chroot "lorax -p ESCore -v 7.3 -r 7.3 -s ${SERVER_OS_REPO} -s ${SERVER_EASYSTACK_REPO} --isfinal --customfield /buildiso/escore_repo /buildiso/result"
 
 # Finally we copy the result iso out of mock environment.

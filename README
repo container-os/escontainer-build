@@ -23,8 +23,7 @@ build_iso.sh:
 
 make_repos.sh:
  -> Create easystack repository for mock / installer / iso environment.
-    Someone has to migrate the result repos to the server for the
-    httpd and rsyncd services.
+    One must migrate the result repos to the server for the httpd services.
 
 shell.sh:
  -> Enter mock environment if one would like to try some commands.
@@ -54,6 +53,5 @@ Note
      http://[remote]/ESCore/CentOS/7.3.1611/os
      http://[remote]/ESCore/CentOS/7.3.1611/updates
      http://[remote]/ESCore/CentOS/7.3.1611/easystack
-     rsync://[remote]/escore_repo
 
 -----------------------------------------------------------------------------------

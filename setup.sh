@@ -36,6 +36,8 @@ done
 if [ -d `pwd`/config/${SET_CONFIG} ]; then
   cp `pwd`/config/${SET_CONFIG}/centos-7-x86_64.cfg .
   cp `pwd`/config/${SET_CONFIG}/common.sh .
+  cp `pwd`/config/${SET_CONFIG}/escore-packages-list .
+  cp `pwd`/config/${SET_CONFIG}/escore-comps.xml .
   echo "Copying settings ...... DONE."
 else
   echo "The configuration '${SET_CONFIG}' does not exist!"
