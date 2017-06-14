@@ -13,14 +13,14 @@ source ./common.sh
 # Under mock environment, we need to copy escore-packages-list and escore-comps.xml into it.
 # The list contains all the packages we would like to use yumdownloader to download it.
 # The xml file is the group file which will be used for creating repodata.
-/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyin escore-packages-list /buildiso/escore_repo/Packages/packages-list
+/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyin escore-packages-list /buildiso/packages-list
 /usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyin escore-comps.xml /buildiso/escore_repo/comps.xml
 
 # Use yumdownloader to download all the rpm files under mock environment.
 # It takes yum repo settings specified in centos-7-x86_64.cfg so that
 # we can make sure we will get the up-to-date packages.
 /usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso/escore_repo/Packages" \
---chroot 'cat packages-list | while read os_package; do yumdownloader ${os_package}; done'
+--chroot 'cat /buildiso/packages-list | while read os_package; do yumdownloader ${os_package}; done'
 
 # So far we only support x86_64 packages.
 # Delete all other *.i686.rpm files.
