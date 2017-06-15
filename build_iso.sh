@@ -20,7 +20,7 @@ source ./common.sh
 # It takes yum repo settings specified in centos-7-x86_64.cfg so that
 # we can make sure we will get the up-to-date packages.
 /usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso/escore_repo/Packages" \
---chroot 'cat /buildiso/packages-list | while read os_package; do yumdownloader ${os_package}; done'
+--chroot 'cat /buildiso/packages-list | while read os_package; do echo Downloading ${os_package} ...; yumdownloader ${os_package}; done'
 
 # So far we only support x86_64 packages.
 # Delete all other *.i686.rpm files.
