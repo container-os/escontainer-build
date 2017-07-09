@@ -27,6 +27,7 @@ do
     *)
       # Unknown option.
       echo "Unknown: ${ARG}"
+      exit 1
       ;;
   esac
 done
