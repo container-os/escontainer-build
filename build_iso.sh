@@ -42,7 +42,7 @@ source ./common.sh
 # Also, our lorax support --customfield option and we can use it to specify the escore rpm files
 # which will be included in the iso image so that we have local media repository at installation stage.
 /usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso" \
---chroot "lorax -p ESCore -v 7.3 -r 7.3 -s ${SERVER_OS_REPO} -s ${SERVER_EASYSTACK_REPO} --isfinal --customfield /buildiso/escore_repo /buildiso/result"
+--chroot "lorax -p 'EasyStack Cloud Linux' -v 7.3 -r 7.3 -s ${SERVER_OS_REPO} -s ${SERVER_EASYSTACK_REPO} --isfinal --customfield /buildiso/escore_repo /buildiso/result"
 
 # Finally we copy the result iso out of mock environment.
 /usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyout /buildiso/result/images/boot.iso escore.iso
