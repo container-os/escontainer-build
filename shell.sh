@@ -4,4 +4,4 @@
 source ./common.sh
 
 # Physically enter the mock shell environment.
-/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --shell
+/usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --shell

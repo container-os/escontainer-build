@@ -4,7 +4,7 @@
 source ./common.sh
 
 # Set variables that are going to be passed to rpmgen_mock.sh script.
-MOCK_CFG=`pwd`/centos-7-x86_64.cfg
+MOCK_CFG=`pwd`/escl-7-x86_64.cfg
 MOCK_CHROOT=`pwd`/chroot/
 
 # Set directory variables.

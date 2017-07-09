@@ -34,7 +34,7 @@ done
 
 # Check if the directory exist and then copy configuration files.
 if [ -d `pwd`/config/${SET_CONFIG} ]; then
-  cp `pwd`/config/${SET_CONFIG}/centos-7-x86_64.cfg .
+  cp `pwd`/config/${SET_CONFIG}/escl-7-x86_64.cfg .
   cp `pwd`/config/${SET_CONFIG}/common.sh .
   cp `pwd`/config/${SET_CONFIG}/escore-packages-list .
   cp `pwd`/config/${SET_CONFIG}/escore-comps.xml .
@@ -61,15 +61,15 @@ source ./common.sh
 #   SERVER_UPDATES_REPO
 #   SERVER_EASYSTACK_REPO
 # If the option --server= is specified, we need to use
-# sed command to modify baseurl field in the centos-7-x86_64.cfg.
+# sed command to modify baseurl field in the escl-7-x86_64.cfg.
 # Note that we take '#' as sed option delimiter to avoid bad effect
 # of '/' characters in the variables.
 if [ -n "${SET_SERVER}" ]; then
-  sed -i "s#baseurl='.*os/x86_64/'#baseurl='${SERVER_OS_REPO}'#g" centos-7-x86_64.cfg
-  sed -i "s#baseurl='.*updates/x86_64/'#baseurl='${SERVER_UPDATES_REPO}'#g" centos-7-x86_64.cfg
-  sed -i "s#baseurl='.*easystack/x86_64/'#baseurl='${SERVER_EASYSTACK_REPO}'#g" centos-7-x86_64.cfg
-  echo "Setting SERVER in centos-7-x86_64.cfg ...... DONE."
+  sed -i "s#baseurl='.*os/x86_64/'#baseurl='${SERVER_OS_REPO}'#g" escl-7-x86_64.cfg
+  sed -i "s#baseurl='.*updates/x86_64/'#baseurl='${SERVER_UPDATES_REPO}'#g" escl-7-x86_64.cfg
+  sed -i "s#baseurl='.*easystack/x86_64/'#baseurl='${SERVER_EASYSTACK_REPO}'#g" escl-7-x86_64.cfg
+  echo "Setting SERVER in escl-7-x86_64.cfg ...... DONE."
 fi
 
 # Initialize mock environment.
-/usr/bin/mock -r centos-7-x86_64.cfg --rootdir `pwd`/chroot/ --init
+/usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --init
