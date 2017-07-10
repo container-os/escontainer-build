@@ -22,11 +22,6 @@ source ./common.sh
 /usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso/escore_repo/Packages" \
 --chroot 'cat /buildiso/packages-list | while read os_package; do echo Downloading ${os_package} ...; yumdownloader ${os_package}; done'
 
-# So far we only support x86_64 packages.
-# Delete all other *.i686.rpm files.
-/usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso/escore_repo/Packages" \
---chroot 'rm -f *.i686.rpm'
-
 # Create repodata with corresponding group file.
 /usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso/escore_repo" \
 --chroot 'createrepo -g comps.xml ./ -o ./'
