@@ -305,7 +305,6 @@
       <packagereq type="mandatory">authconfig</packagereq>
       <packagereq type="mandatory">bc</packagereq>
       <packagereq type="mandatory">bind-utils</packagereq>
-      <packagereq type="mandatory">centos-indexhtml</packagereq>
       <packagereq type="mandatory">cpio</packagereq>
       <packagereq type="mandatory">crda</packagereq>
       <packagereq type="mandatory">crontabs</packagereq>
