@@ -17,20 +17,20 @@ Scripts
 setup.sh:
  -> Copy the necessary settings and initialize mock environment.
     This script should be used before running other scripts.
+    Two options are also available on demand:
+      --server=SERVER
+      --config=CONFIG
 
 build_iso.sh:
- -> Build ESCore iso image.
+ -> Build "EasyStack Cloud Linux" ISO image.
 
 make_repos.sh:
  -> Create easystack repository for mock / installer / iso environment.
-    One must migrate the result repos to the server for the httpd services.
+    After running this script, one must copy the result to the server
+    with httpd service.
 
 shell.sh:
  -> Enter mock environment if one would like to try some commands.
-
-common.sh:
- -> This contains necessary settings and variables.
-    All other shell scripts are supposed to source it.
 
 clean.sh:
  -> Cleanup mock cache and all the stuff we created.
@@ -50,8 +50,8 @@ Note
    So make sure that the services are available on the server and the directory
    locations are correct.
 
-     http://[server]/ESCore/7.3.1611/os
-     http://[server]/ESCore/7.3.1611/updates
-     http://[server]/ESCore/7.3.1611/easystack
+     http://[server]/ESCL/7.3.1611/os
+     http://[server]/ESCL/7.3.1611/updates
+     http://[server]/ESCL/7.3.1611/easystack
 
 -----------------------------------------------------------------------------------
