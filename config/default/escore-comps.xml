@@ -2810,7 +2810,6 @@
       <packagereq type="optional">nmap</packagereq>
       <packagereq type="optional">stunnel</packagereq>
       <packagereq type="optional">wireshark</packagereq>
-      <packagereq type="optional">wireshark-gnome</packagereq>
     </packagelist>
   </group>
   <group>
@@ -4698,13 +4697,8 @@
   </environment>
   <langpacks>
     <match install="autocorr-%s" name="autocorr-en"/>
-    <match install="firefox-langpack-%s" name="firefox"/>
-    <match install="gimp-help-%s" name="gimp-help"/>
-    <match install="gnome-getting-started-docs-%s" name="gnome-getting-started-docs"/>
     <match install="hunspell-%s" name="hunspell"/>
     <match install="hyphen-%s" name="hyphen"/>
-    <match install="kde-l10n-%s" name="kdelibs"/>
-    <match install="libreoffice-langpack-%s" name="libreoffice-core"/>
     <match install="man-pages-%s" name="man-pages"/>
     <match install="mythes-%s" name="mythes"/>
   </langpacks>
