@@ -1064,7 +1064,7 @@ net-tools
 NetworkManager
 NetworkManager-glib
 NetworkManager-libnm
-NetworkManager-openswan
+NetworkManager-libreswan
 NetworkManager-team
 NetworkManager-tui
 NetworkManager-wifi
@@ -1586,7 +1586,6 @@ redhat-lsb-core
 redhat-lsb-submod-security
 redhat-rpm-config
 redhat-upgrade-dracut
-redhat-upgrade-tool
 regexp
 relaxngDatatype
 resource-agents

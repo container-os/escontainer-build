@@ -420,7 +420,6 @@
       <packagereq type="optional">python-volume_key</packagereq>
       <packagereq type="optional">redhat-lsb-core</packagereq>
       <packagereq type="optional">redhat-upgrade-dracut</packagereq>
-      <packagereq type="optional">redhat-upgrade-tool</packagereq>
       <packagereq type="optional">rsyslog-gnutls</packagereq>
       <packagereq type="optional">rsyslog-gssapi</packagereq>
       <packagereq type="optional">rsyslog-relp</packagereq>
@@ -2806,7 +2805,7 @@
       <packagereq type="optional">mrtg</packagereq>
       <packagereq type="optional">netlabel_tools</packagereq>
       <packagereq type="optional">netsniff-ng</packagereq>
-      <packagereq type="optional">NetworkManager-openswan</packagereq>
+      <packagereq type="optional">NetworkManager-libreswan</packagereq>
       <packagereq type="optional">nmap</packagereq>
       <packagereq type="optional">stunnel</packagereq>
       <packagereq type="optional">wireshark</packagereq>
