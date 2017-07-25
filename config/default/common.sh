@@ -6,7 +6,7 @@
 # make our escore-build process more general on any other machines.
 export LANG=en_US
 
-# Assign the server that is supposed to have http and rsync services.
+# Assign the server that is supposed to have httpd service.
 # In additon, several repo locations are also provided based on SERVER.
 # Those fields will be used in setup.sh and build_iso.sh for accessing
 # all the rpm packages.
