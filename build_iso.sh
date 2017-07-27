@@ -36,8 +36,10 @@ source ./common.sh
 # under /var/lib/mock/ and the --cwd is able to take effect.
 # Also, our lorax support --customfield option and we can use it to specify the escore rpm files
 # which will be included in the iso image so that we have local media repository at installation stage.
+# Note that we use vault repository because it contains complete development and GUI rpm files
+# for lorax to create installation environment.
 /usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso" \
---chroot "lorax -p 'EasyStack Cloud Linux' -v 7.3 -r 7.3 -s ${SERVER_OS_REPO} -s ${SERVER_EASYSTACK_REPO} --isfinal --customfield /buildiso/escore_repo /buildiso/result"
+--chroot "lorax -p 'EasyStack Cloud Linux' -v 7.3 -r 7.3 -s ${VAULT_OS_REPO} -s ${VAULT_EASYSTACK_REPO} --isfinal --customfield /buildiso/escore_repo /buildiso/result"
 
 # Finally we copy the result iso out of mock environment.
 /usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyout /buildiso/result/images/boot.iso escore.iso
