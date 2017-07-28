@@ -27,6 +27,7 @@ SERVER_EASYSTACK_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/7.3.1611/eas
 VAULT_OS_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/os/x86_64/
 VAULT_UPDATES_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/updates/x86_64/
 VAULT_EASYSTACK_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/easystack/x86_64/
+VAULT_ATOMIC_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/atomic/x86_64/
 
 # Set the git repo location and a list of required packages.
 REPO_LOCATION=git@github.com:easystack
