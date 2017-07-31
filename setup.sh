@@ -60,7 +60,6 @@ source ./common.sh
 # At this point we have variables from common.sh:
 #   SERVER_OS_REPO
 #   SERVER_UPDATES_REPO
-#   SERVER_EASYSTACK_REPO
 # If the option --server= is specified, we need to use
 # sed command to modify baseurl field in the escl-7-x86_64.cfg.
 # Note that we take '#' as sed option delimiter to avoid bad effect
@@ -68,7 +67,6 @@ source ./common.sh
 if [ -n "${SET_SERVER}" ]; then
   sed -i "s#baseurl='.*os/x86_64/'#baseurl='${SERVER_OS_REPO}'#g" escl-7-x86_64.cfg
   sed -i "s#baseurl='.*updates/x86_64/'#baseurl='${SERVER_UPDATES_REPO}'#g" escl-7-x86_64.cfg
-  sed -i "s#baseurl='.*easystack/x86_64/'#baseurl='${SERVER_EASYSTACK_REPO}'#g" escl-7-x86_64.cfg
   echo "Setting SERVER in escl-7-x86_64.cfg ...... DONE."
 fi
 

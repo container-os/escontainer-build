@@ -29,7 +29,7 @@ source ./common.sh
 # === Step 2: Use lorax to create ESCore iso image ===
 
 # We need install our EasyStack lorax which is modified to build ESCore installation iso.
-/usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --install ${SERVER_EASYSTACK_REPO}/Packages/lorax-19.6.78-1.el7.centos.es.1.x86_64.rpm
+/usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --install ${SERVER_OS_REPO}/Packages/lorax-19.6.78-1.el7.centos.es.1.x86_64.rpm
 
 # Issue the lorax command to create iso image.
 # Instead of using --shell, we use --chroot because it can be logged

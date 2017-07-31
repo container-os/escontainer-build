@@ -19,7 +19,6 @@ PASSWORD=escore
 # for making the ISO image.
 SERVER_OS_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/7.3.1611/os/x86_64/
 SERVER_UPDATES_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/7.3.1611/updates/x86_64/
-SERVER_EASYSTACK_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/7.3.1611/easystack/x86_64/
 
 # A vault repository that contains complete rpm files is required.
 # At least it includes development and GUI stuff that supports
