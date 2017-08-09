@@ -9,3 +9,4 @@ include utils/help.mk
 include utils/ostree.mk
 include utils/vm.mk
 include utils/packaging.mk
+include utils/escore.mk
