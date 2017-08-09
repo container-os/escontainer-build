@@ -1,0 +1,6 @@
+[escore-base]
+name=ESCore-7 - Base
+baseurl=http://10.60.0.129/escore-release/escore7/
+enabled=1
+gpgcheck=0
+gpgkey=http://10.60.0.129/escore-release/escore7/RPM-GPG-KEY-ESCore-7

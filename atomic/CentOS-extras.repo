@@ -1,0 +1,10 @@
+[CentOS-extras]
+name=CentOS-$releasever - Extras
+#mirrorlist=http://mirrorlist.centos.org/?release=7&arch=$basearch&repo=extras&infra=$infra
+#baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
+baseurl=ftp://10.60.0.129/centos/7.3.1611/extras/x86_64/
+gpgcheck=0
+gpgkey=ftp://10.60.0.129/centos/7.3.1611/os/x86_64/RPM-GPG-KEY-CentOS-7
+# List excludes here that have higher versions due to missing git tags, until we implement
+# priorities: https://github.com/CentOS/sig-atomic-buildscripts/issues/138
+exclude=cloud-utils-growpart qemu-img qemu-kvm qemu-kvm-common qemu-kvm-tools libvirt libvirt-client libvirt-daemon* libvirt-devel libvirt-docs libvirt-lock-sanlock libvirt-login-shell kernel kernel-abi-whitelists kernel-debug kernel-debug-devel kernel-devel kernel-doc kernel-headers kernel-tools kernel-tools-libs* perf python-perf selinux-policy-mls cloud-init

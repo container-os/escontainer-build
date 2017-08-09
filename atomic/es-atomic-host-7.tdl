@@ -1,0 +1,16 @@
+<template>
+    <name>rawhide</name>
+    <os>
+        <name>CentOS-7</name>
+        <version>3</version>
+        <arch>x86_64</arch>
+        <install type='iso'>
+            <iso>file:///home/chenfan/atomic/isos/Escore-7.3-x86_64-20170414.iso</iso>
+        </install>
+        <rootpw>rootroot</rootpw>
+    </os>
+    <disk>
+      <size>20</size>
+    </disk>
+</template>
+
