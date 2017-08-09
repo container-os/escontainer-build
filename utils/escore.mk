@@ -1,6 +1,6 @@
 ##@escore The iso build process is based on lorax to build escore iso/repo
 
-ESCORE_BASE_DIR = .
+ESCORE_BASE_DIR = escore
 COMMON_CFG = $(ESCORE_BASE_DIR)/common.sh
 
 $(COMMON_CFG):
