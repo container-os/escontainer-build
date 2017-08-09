@@ -41,3 +41,7 @@ include utils/vm.mk
 atomic_json:  ##@atomic_debug force generate json
 	rm -f $(JSON_FILE)
 	make $(JSON_FILE)
+
+atomic_seed:  ##@atomic_debug force generate seed
+	rm -f $(SEED_ISO) $(USER_DATA) $(META_DATA)
+	make $(SEED_ISO)

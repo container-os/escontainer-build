@@ -5,18 +5,20 @@ ifeq (yes,$(shell test -e envrc_${DATE}-${LAST_BUILD_NUM} && echo "yes" || echo 
     $(info include envrc_${DATE}-${LAST_BUILD_NUM})
 endif
 
-SEED ?= seed
+SEED = $(OSTREE_REPO)/seed
+SEED_ISO = $(SEED)/seed.iso
+
 META_DATA = $(SEED)/meta-data
 USER_DATA = $(SEED)/user-data
+
+
 # "virsh dominfo obsx" check vm instance status
 HOST ?= $(DEFAULT_HOST)_${DATE}-${LAST_BUILD_NUM}
 HOSTS = $(shell virsh list --all --name | grep ${DEFAULT_HOST}_)
 PASSWORD ?= passw0rd
 
-ifeq (yes,$(shell test -e ${OSTREE_REPO}/disk_$(DATE)-$(LAST_BUILD_NUM) && echo yes || echo no))
-SEED_HASH ?= $(shell cat ${USER_DATA} ${META_DATA} | md5sum | head -c 4)
-SEED_ISO ?= seed_$(SEED_HASH).iso
-endif
+$(SEED):
+	mkdir -p $(SEED)
 
 $(USER_DATA): $(SEED)
 	@printf "#cloud-config\npassword: $(PASSWORD) \
@@ -31,17 +33,13 @@ $(META_DATA): $(SEED)
 \n" > $(META_DATA)
 	cat $(META_DATA)
 
-
-atomic_seed_iso: $(USER_DATA) $(META_DATA)  ##@atomic_vm create cloud-init seed image
-ifneq ($(wildcard ${SEED}/*_data),)
-	$(error user_data is not created)
+$(SEED_ISO): $(USER_DATA) $(META_DATA)  ##@atomic_prepare create related seed file like json and cloud-init iso
+ifeq (no,$(shell test -e $(OSTREE_IMGDIR) && echo yes || echo no))
+	$(error $(OSTREE_IMGDIR) is not created, please make atomic_image first)
 endif
-ifeq (no,$(shell test -e ${OSTREE_REPO}/disk_$(DATE)-$(LAST_BUILD_NUM) && echo yes || echo no))
-	$(error ${OSTREE_REPO}/disk_$(DATE)-$(LAST_BUILD_NUM) is not created, please make iso first)
-endif
-	cd $(SEED); genisoimage -output $(OSTREE_REPO)/$(SEED_ISO) -volid cidata -joliet -rock user-data meta-data
+	cd $(SEED); genisoimage -output $(SEED_ISO) -volid cidata -joliet -rock user-data meta-data | true
 ifneq (0,$(SUDO_UID))
-	@chown -R $(SUDO_UID):$(SUDO_GID) $(OSTREE_REPO)/$(SEED_ISO) 
+	chown -R $(SUDO_UID):$(SUDO_GID) $(SEED)
 endif
 
 atomic_prepare_image_dir:  ##@atomic_prepare check image dir
@@ -53,7 +51,7 @@ ifeq (yes,$(shell test -e $(OSTREE_IMGDIR)/images && echo yes || echo no))
 endif
 
 atomic_vm_create: IMG?=$(OSTREE_IMGDIR)/images/es-atomic-host-7.qcow2
-atomic_vm_create: atomic_seed_iso ##@atomic_vm create vm, use last image or IMG=<path> make atomic_vm_create
+atomic_vm_create:  ##@atomic_vm create vm, use last image or IMG=<path> make atomic_vm_create
 	@echo pass
 	virt-install \
 --name=$(HOST) \
@@ -63,7 +61,7 @@ atomic_vm_create: atomic_seed_iso ##@atomic_vm create vm, use last image or IMG=
 --graphics none \
 --noautoconsole \
 --network bridge=virbr0 \
---cdrom=$(OSTREE_REPO)/$(SEED_ISO) \
+--cdrom=$(SEED_ISO) \
 --os-type=linux \
 --os-variant=rhel7
 

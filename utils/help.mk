@@ -3,7 +3,6 @@
 
 ##@miscellaneous description for catalog
 
-SEED ?= seed
 UID = $(shell id -u)
 SUDO_UID ?= 0
 SUDO_GID ?= 0
@@ -28,9 +27,3 @@ HELP_FUN = \
 
 help:	##@miscellaneous shows common make targets
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
-
-$(SEED):
-	mkdir -p $(SEED)
-ifneq (0,$(SUDO_UID))
-	@chown -R $(SUDO_UID):$(SUDO_GID) $(SEED)
-endif
