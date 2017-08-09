@@ -29,7 +29,8 @@ ifneq (0,$(SUDO_UID))
 	@chown $(SUDO_UID):$(SUDO_GID) $(OSTREE_REPO)
 endif
 
-$(JSON_FILE): $(SEED)
+$(JSON_FILE):
+	mkdir -p $(OSTREE_IMGDIR)/seed
 ifneq ($(DEFAULT_OSTREE_REPO_REF),$(OSTREE_REPO_REF))
 	@python -c 'import json; old=json.load(open("$(OSTREE_BUILD_SCRIPTS_DIR)/es-default.json")); old["ref"]="${OSTREE_REPO_REF}"; print(json.dumps(old, indent=2, sort_keys=True))' > $(JSON_FILE)
 	@echo repo_ref: $(OSTREE_REPO_REF)
@@ -37,14 +38,10 @@ else
 	@cp $(OSTREE_BUILD_SCRIPTS_DIR)/es-default.json $(JSON_FILE)
 endif
 ifneq (0,$(SUDO_UID))
-	@chown -R $(SUDO_UID):$(SUDO_GID) $(JSON_FILE)
+	@chown -R $(SUDO_UID):$(SUDO_GID) $(OSTREE_IMGDIR)/seed
 endif
 	@echo repo_json: $(JSON_FILE)
-	@cd $(OSTREE_BUILD_SCRIPTS_DIR); ln -s -f ../$(JSON_FILE) es-atomic-host.json
-
-json:  ##@atomic_prepare force generate json
-	rm -f $(JSON_FILE)
-	make $(JSON_FILE)
+	@cd $(OSTREE_BUILD_SCRIPTS_DIR); ln -s -f $(JSON_FILE) es-atomic-host.json
 
 atomic_httpd: atomic_env_check  ##@atomic_prepare httpd
 ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
@@ -60,13 +57,14 @@ atomic_httpd_stop: atomic_env_check  ##@atomic_prepare stop httpd
 atomic_compose: $(JSON_FILE) atomic_repo_init ##@atomic compose repo
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); rpm-ostree compose tree --repo ${OSTREE_REPO}/${OSTREE_REPO_NAME} es-atomic-host.json $(ARGS)
 
-atomic_image: $(JSON_FILE) atomic_repo_init atomic_httpd  ##@atomic create image, IMGDIR is for identify output dir. exmaple: IMGDIR=/tmp/abc sudo make image)
+atomic_image:  atomic_repo_init atomic_httpd  ##@atomic create image
 ifeq (00,$(LAST_BUILD_NUM))
 	$(error make atomic_prepare_image_dir first)
 endif
 ifeq (yes,$(shell test -e ${OSTREE_IMGDIR}/images && echo "yes" || echo "no"))
 	$(error image existed, make atomic_prepare_image_dir)
 endif
+	make -s $(JSON_FILE)
 ifneq (no,$(FORCE_COMPOSE))
 	make -s atomic_compose
 endif

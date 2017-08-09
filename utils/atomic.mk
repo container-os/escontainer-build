@@ -33,8 +33,11 @@ OSTREE_REPO_SERVICE_PORT_USED = $(shell utils/check_port.py --host ${OSTREE_SERV
 OSTREE_REPO_SERVICE_STARTED = $(shell utils/check_port.py --host ${OSTREE_SERV_HOST} --port ${OSTREE_SERV_PORT})
 endif
 
-JSON_FILE = $(SEED)/es_${DATE}-${NEXT_BUILD_NUM}.json
-
+JSON_FILE = $(OSTREE_IMGDIR)/seed/atomic.json
 
 include utils/ostree.mk
 include utils/vm.mk
+
+atomic_json:  ##@atomic_debug force generate json
+	rm -f $(JSON_FILE)
+	make $(JSON_FILE)
