@@ -32,7 +32,7 @@ ifneq (0,$(SUDO_UID))
 	@chown $(SUDO_UID):$(SUDO_GID) $(OSTREE_REPO)
 endif
 
-$(JSON_FILE):
+$(JSON_FILE): $(OSTREE_BUILD_SCRIPTS_DIR)/es-default.json
 	mkdir -p $(OSTREE_IMGDIR)/seed
 ifneq ($(DEFAULT_OSTREE_REPO_REF),$(OSTREE_REPO_REF))
 	@python -c 'import json; old=json.load(open("$(OSTREE_BUILD_SCRIPTS_DIR)/es-default.json")); old["ref"]="${OSTREE_REPO_REF}"; print(json.dumps(old, indent=2, sort_keys=True))' > $(JSON_FILE)
