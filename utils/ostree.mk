@@ -3,9 +3,9 @@
 
 # Common variable
 
-OSTREE_REPO ?= /opt/ostree
+OSTREE_REPO ?= /srv/ostree
 OSTREE_REPO_NAME ?= es-atomic-host
-OSTREE_BUILD_SCRIPTS_DIR ?= /opt/escontos-buildscripts/atomic
+OSTREE_BUILD_SCRIPTS_DIR ?= /srv/escore-build/atomic
 OSTREE_REPO_REF ?= $(DEFAULT_OSTREE_REPO_REF)
 OSTREE_SERV_HOST ?= 192.168.122.1
 OSTREE_SERV_PORT ?= 11887
