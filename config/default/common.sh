@@ -30,4 +30,4 @@ VAULT_ATOMIC_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/atomic/
 
 # Set the git repo location and a list of required packages.
 REPO_LOCATION=git@github.com:easystack
-REPO_ARRAY=(lorax anaconda escore-release escore-logos yum qemu-kvm libvirt escore_kernel)
+REPO_ARRAY=(lorax anaconda escore-release escore-logos yum qemu-kvm libvirt escore_kernel openvswitch)
