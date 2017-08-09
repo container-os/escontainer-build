@@ -1,7 +1,7 @@
-##@ostree please run ostree related commands with sudo
-##@ostree_prepare those commands would called by make <ostree> (For DEBUG)
+##@atomic please run ostree related commands with sudo
+##@atomic_prepare those commands would called by make <ostree> (For DEBUG)
 
-env_check:	##@ostree_prepare check current package version
+atomic_env_check:  ##@atomic_prepare check current package version
 ifneq (0,$(UID))
 	$(error Please run ostree related commands as root)
 endif
@@ -9,10 +9,10 @@ ifeq (no,$(RPM_OSTREE_TOOLBOX_INSTALLED))
 	$(warning rpm-ostree-toolbox is not installed, only can create ostree repo)
 endif
 ifeq (no,$(OSTREE_INSTALLED))
-	@make env_prepare
+	@make atomic_env_prepare
 endif
 
-env_prepare:  ##@ostree_prepare install ostree related packages
+atomic_env_prepare:  ##@atomic_prepare install ostree related packages
 	yum install -y yum-utils
 	yum-config-manager --add-repo http://buildlogs.centos.org/centos/7/atomic/x86_64/Packages
 	yum-config-manager --add-repo http://cbs.centos.org/repos/atomic7-testing/x86_64/os
@@ -20,7 +20,7 @@ env_prepare:  ##@ostree_prepare install ostree related packages
 	yum install -y rpm-ostree
 	yum install -y rpm-ostree-toolbox --enablerepo=cbs.centos.org_repos_atomic7-testing_x86_64_os_ --nogpgcheck
 
-repo_init: env_check  ##@ostree_prepare repo_init
+atomic_repo_init: atomic_env_check  ##@atomic_prepare repo_init
 ifeq (no,$(OSTREE_REPO_CREATED))
 	@mkdir -p ${OSTREE_REPO}
 	ostree --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} init --mode=archive-z2
@@ -42,47 +42,47 @@ endif
 	@echo repo_json: $(JSON_FILE)
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); ln -s -f ../$(JSON_FILE) es-atomic-host.json
 
-json:  ##@ostree_prepare force generate json
+json:  ##@atomic_prepare force generate json
 	rm -f $(JSON_FILE)
 	make $(JSON_FILE)
 
-http_service: env_check  ##@ostree_prepare httpd
+atomic_httpd: atomic_env_check  ##@atomic_prepare httpd
 ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
 	ostree trivial-httpd -P ${OSTREE_SERV_PORT} ${OSTREE_REPO}/${OSTREE_REPO_NAME} & echo "$$!" > ${OSTREE_REPO}/trivial-httpd.pid
 else
 	$(warning ostree service started)
 endif
 
-http_service_stop: env_check  ##@ostree_prepare stop httpd
+atomic_httpd_stop: atomic_env_check  ##@atomic_prepare stop httpd
 	@kill -9 `cat ${OSTREE_REPO}/trivial-httpd.pid`
 	@rm ${OSTREE_REPO}/trivial-httpd.pid
 
-compose: $(JSON_FILE) repo_init ##@ostree compose repo
+atomic_compose: $(JSON_FILE) atomic_repo_init ##@atomic compose repo
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); rpm-ostree compose tree --repo ${OSTREE_REPO}/${OSTREE_REPO_NAME} es-atomic-host.json $(ARGS)
 
-image: IMGDIR=${OSTREE_REPO}/disk_${DATE}-${NEXT_BUILD_NUM}
-image: $(JSON_FILE) repo_init http_service  ##@ostree create image, IMGDIR is for identify output dir. exmaple: IMGDIR=/tmp/abc sudo make image)
+atomic_image: IMGDIR=${OSTREE_REPO}/disk_${DATE}-${NEXT_BUILD_NUM}
+atomic_image: $(JSON_FILE) atomic_repo_init atomic_httpd  ##@atomic create image, IMGDIR is for identify output dir. exmaple: IMGDIR=/tmp/abc sudo make image)
 ifneq (no,$(FORCE_COMPOSE))
-	make -s compose
+	make -s atomic_compose
 endif
-	make -s http_service
+	make -s atomic_httpd
 	cd /tmp; rpm-ostree-toolbox imagefactory -c ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-config.ini -i kvm --ostreerepo ${OSTREE_REPO}/${OSTREE_REPO_NAME} -o ${IMGDIR} --no-compression
-	make -s http_service_stop
+	make -s atomic_httpd_stop
 	@echo IMGDIR: ${IMGDIR}
 ifneq (0,$(SUDO_UID))
 	@chown -R $(SUDO_UID):$(SUDO_GID) $(IMGDIR)
 endif
 
-image_gz: IMGDIR=${OSTREE_REPO}/disk_${DATE}-${LAST_BUILD_NUM}
-image_gz: env_check  ##@ostree create image gz file, need run after make image
+atomic_image_gz: IMGDIR=${OSTREE_REPO}/disk_${DATE}-${LAST_BUILD_NUM}
+atomic_image_gz: atomic_env_check  ##@atomic create image gz file, need run after make atomic_image
 ifeq (00,$(LAST_BUILD_NUM))
 	$(error can not found built image, please run make image to create it)
 endif
 	gzip ${IMGDIR}/images/*.qcow2
 	cd ${IMGDIR}/images/; /bin/sh -c "find .  -type f | grep -v '.*SUMS$'' | xargs sha256sum" > SHA256SUMS
 
-sign: GPGKEY?=00
-sign:  ##@ostree sign, GPGKEY=<> make sign
+atomic_sign: GPGKEY?=00
+atomic_sign:  ##@atomic sign, GPGKEY=<> make atomic_sign
 ifeq (00,$(GPGKEY))
 	$(error can not found gpg key)
 endif

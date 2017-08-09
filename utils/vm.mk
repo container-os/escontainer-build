@@ -1,4 +1,4 @@
-##@vm for different vm, can config by envrc_<data>-<build_num>
+##@atomic_vm for different vm, can config by envrc_<data>-<build_num>
 
 ifeq (yes,$(shell test -e envrc_${DATE}-${LAST_BUILD_NUM} && echo "yes" || echo "no"))
     include envrc_${DATE}-${LAST_BUILD_NUM}
@@ -32,7 +32,7 @@ $(META_DATA): $(SEED)
 	cat $(META_DATA)
 
 
-seed_iso: $(USER_DATA) $(META_DATA)  ##@vm create cloud-init seed image
+atomic_seed_iso: $(USER_DATA) $(META_DATA)  ##@atomic_vm create cloud-init seed image
 ifneq ($(wildcard ${SEED}/*_data),)
 	$(error user_data is not created)
 endif
@@ -44,13 +44,13 @@ ifneq (0,$(SUDO_UID))
 	@chown -R $(SUDO_UID):$(SUDO_GID) $(OSTREE_REPO)/$(SEED_ISO) 
 endif
 
-build_seed:  ##@vm rebuild seed image
+atomic_prepare_image_dir:  ##@atomic_prepare check image dir
 	echo envrc_${DATE}-${LAST_BUILD_NUM}
 	rm -f $(USER_DATA) $(META_DATA)
 	@make -s $(USER_DATA) $(META_DATA)
 
-vm_create: IMG?=${OSTREE_REPO}/disk_${DATE}-${LAST_BUILD_NUM}/images/es-atomic-host-7.qcow2
-vm_create: seed_iso  ##@vm create vm, use last image or IMG=<path> make vm_create
+atomic_vm_create: IMG?=${OSTREE_REPO}/disk_${DATE}-${LAST_BUILD_NUM}/images/es-atomic-host-7.qcow2
+atomic_vm_create: atomic_seed_iso ##@atomic_vm create vm, use last image or IMG=<path> make atomic_vm_create
 	@echo pass
 	virt-install \
 --name=$(HOST) \
@@ -64,17 +64,17 @@ vm_create: seed_iso  ##@vm create vm, use last image or IMG=<path> make vm_creat
 --os-type=linux \
 --os-variant=rhel7
 
-vm_console:  ##@vm connect to current host, or HOST=<xxx> make vm_console
+atomic_vm_console:  ##@atomic_vm connect to current host, or HOST=<xxx> make atomic_vm_console
 	virsh console $(HOST)
 
-vm_list:  ##@vm list all atomic host vms
+atomic_vm_list:  ##@atomic_vm list all atomic host vms
 	@echo $(HOSTS)
 
-vm_destroy:  ##@vm destroy current host
+atomic_vm_destroy:  ##@atomic_vm destroy current host
 	virsh destroy $(HOST)
 	virsh undefine $(HOST)
 
-vm_destroy_all:  ##@vm destroy all atomic host vms
+atomic_vm_destroy_all:  ##@atomic_vm destroy all atomic host vms
 	@for i in $(HOSTS);      \
 	do                       \
 	  virsh destroy $$i;     \
