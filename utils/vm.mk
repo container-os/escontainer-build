@@ -45,11 +45,14 @@ ifneq (0,$(SUDO_UID))
 endif
 
 atomic_prepare_image_dir:  ##@atomic_prepare check image dir
-	echo envrc_${DATE}-${LAST_BUILD_NUM}
-	rm -f $(USER_DATA) $(META_DATA)
-	@make -s $(USER_DATA) $(META_DATA)
+ifeq (00,$(LAST_BUILD_NUM))
+	@mkdir -p $(OSTREE_NEXT_IMGDIR)
+endif
+ifeq (yes,$(shell test -e $(OSTREE_IMGDIR)/images && echo yes || echo no))
+	@mkdir -p $(OSTREE_NEXT_IMGDIR)
+endif
 
-atomic_vm_create: IMG?=${OSTREE_REPO}/disk_${DATE}-${LAST_BUILD_NUM}/images/es-atomic-host-7.qcow2
+atomic_vm_create: IMG?=$(OSTREE_IMGDIR)/images/es-atomic-host-7.qcow2
 atomic_vm_create: atomic_seed_iso ##@atomic_vm create vm, use last image or IMG=<path> make atomic_vm_create
 	@echo pass
 	virt-install \

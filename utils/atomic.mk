@@ -9,14 +9,18 @@ OSTREE_SERV_PORT ?= 11887
 
 FORCE_COMPOSE ?= no
 
+OSTREE_BASE_IMGDIR = $(OSTREE_REPO)/$(OSTREE_REPO_NAME)/images
+
 DATE = $(shell date +%y%m%d)
-ifneq ($(wildcard ${OSTREE_REPO}/disk_${DATE}-[0-9][0-9]),)
-LAST_BUILD_NUM = $(shell ls -d ${OSTREE_REPO}/disk_${DATE}-[0-9][0-9] | sort -rn |head -n 1 | cut -d'-' -f 2)
+ifneq ($(wildcard ${OSTREE_BASE_IMGDIR}/disk_${DATE}-[0-9][0-9]),)
+LAST_BUILD_NUM = $(shell ls -d ${OSTREE_BASE_IMGDIR}/disk_${DATE}-[0-9][0-9] | sort -rn |head -n 1 | xargs basename | cut -d'-' -f 2)
 else
 LAST_BUILD_NUM = 00
 endif
 NEXT_BUILD_NUM = $(shell printf %02d `expr ${LAST_BUILD_NUM} + 1`)
 
+OSTREE_IMGDIR = $(OSTREE_BASE_IMGDIR)/disk_$(DATE)-$(LAST_BUILD_NUM)
+OSTREE_NEXT_IMGDIR = $(OSTREE_BASE_IMGDIR)/disk_$(DATE)-$(NEXT_BUILD_NUM)
 
 # Status
 OSTREE_INSTALLED = $(shell ostree --help > /dev/null 2>&1  && echo "yes" || echo "no")

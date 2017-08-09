@@ -60,26 +60,30 @@ atomic_httpd_stop: atomic_env_check  ##@atomic_prepare stop httpd
 atomic_compose: $(JSON_FILE) atomic_repo_init ##@atomic compose repo
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); rpm-ostree compose tree --repo ${OSTREE_REPO}/${OSTREE_REPO_NAME} es-atomic-host.json $(ARGS)
 
-atomic_image: IMGDIR=${OSTREE_REPO}/disk_${DATE}-${NEXT_BUILD_NUM}
 atomic_image: $(JSON_FILE) atomic_repo_init atomic_httpd  ##@atomic create image, IMGDIR is for identify output dir. exmaple: IMGDIR=/tmp/abc sudo make image)
+ifeq (00,$(LAST_BUILD_NUM))
+	$(error make atomic_prepare_image_dir first)
+endif
+ifeq (yes,$(shell test -e ${OSTREE_IMGDIR}/images && echo "yes" || echo "no"))
+	$(error image existed, make atomic_prepare_image_dir)
+endif
 ifneq (no,$(FORCE_COMPOSE))
 	make -s atomic_compose
 endif
 	make -s atomic_httpd
-	cd /tmp; rpm-ostree-toolbox imagefactory -c ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-config.ini -i kvm --ostreerepo ${OSTREE_REPO}/${OSTREE_REPO_NAME} -o ${IMGDIR} --no-compression
+	cd /tmp; rpm-ostree-toolbox imagefactory -c ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-config.ini -i kvm --ostreerepo ${OSTREE_REPO}/${OSTREE_REPO_NAME} -o ${OSTREE_IMGDIR} --no-compression --overwrite
 	make -s atomic_httpd_stop
-	@echo IMGDIR: ${IMGDIR}
+	@echo OSTREE_IMGDIR: ${OSTREE_IMGDIR}
 ifneq (0,$(SUDO_UID))
-	@chown -R $(SUDO_UID):$(SUDO_GID) $(IMGDIR)
+	@chown -R $(SUDO_UID):$(SUDO_GID) $(OSTREE_IMGDIR)
 endif
 
-atomic_image_gz: IMGDIR=${OSTREE_REPO}/disk_${DATE}-${LAST_BUILD_NUM}
-atomic_image_gz: atomic_env_check  ##@atomic create image gz file, need run after make atomic_image
+atomic_image_gz: atomic_env_check  ##@atomic create image gz file, need run after make image
 ifeq (00,$(LAST_BUILD_NUM))
 	$(error can not found built image, please run make image to create it)
 endif
-	gzip ${IMGDIR}/images/*.qcow2
-	cd ${IMGDIR}/images/; /bin/sh -c "find .  -type f | grep -v '.*SUMS$'' | xargs sha256sum" > SHA256SUMS
+	gzip ${OSTREE_IMGDIR}/images/*.qcow2
+	cd ${OSTREE_IMGDIR}/images/; /bin/sh -c "find .  -type f | grep -v '.*SUMS$'' | xargs sha256sum" > SHA256SUMS
 
 atomic_sign: GPGKEY?=00
 atomic_sign:  ##@atomic sign, GPGKEY=<> make atomic_sign
