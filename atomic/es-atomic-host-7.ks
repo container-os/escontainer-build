@@ -32,7 +32,7 @@ volgroup docker pv.02
 logvol / --size=4000  --fstype="xfs" --name=root --vgname=atomicos --grow
 
 # Equivalent of %include fedora-repo.ks
-ostreesetup --osname="es-atomic-host" --remote="es-atomic-host" --ref="es-atomic-host/7/x86_64/standard" --url="http://192.168.122.1:57503" --nogpg
+ostreesetup --osname="es-atomic-host" --remote="es-atomic-host" --ref="es-atomic-host/7/x86_64/standard" --url="http://192.168.122.1:11887" --nogpg
 
 reboot
 
