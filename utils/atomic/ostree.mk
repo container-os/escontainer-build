@@ -12,7 +12,10 @@ ifeq (no,$(OSTREE_INSTALLED))
 	@make atomic_env_prepare
 endif
 
-atomic_env_prepare:  ##@atomic_prepare install ostree related packages
+atomic_generate_tpl:  ##@atomic_prepare use envtpl.py to generate files
+	@find atomic/ -name *.tpl -exec ./utils/envtpl.py --keep-template {} \;
+
+atomic_env_prepare: atomic_generate_tpl  ##@atomic_prepare install ostree related packages
 	yum install -y yum-utils
 	yum-config-manager --add-repo http://buildlogs.centos.org/centos/7/atomic/x86_64/Packages
 	yum-config-manager --add-repo http://cbs.centos.org/repos/atomic7-testing/x86_64/os
@@ -54,11 +57,11 @@ atomic_httpd_stop: atomic_env_check  ##@atomic_prepare stop httpd
 	@kill -9 `cat ${OSTREE_REPO}/trivial-httpd.pid`
 	@rm ${OSTREE_REPO}/trivial-httpd.pid
 
-atomic_compose: $(JSON_FILE) atomic_repo_init ##@atomic compose repo
+atomic_compose: atomic_generate_tpl $(JSON_FILE) atomic_repo_init ##@atomic compose repo
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); rpm-ostree compose tree --repo ${OSTREE_REPO}/${OSTREE_REPO_NAME} es-atomic-host.json $(ARGS)
 	ostree summary -u --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} $(OSTREE_REPO_REF)
 
-atomic_image:  atomic_repo_init atomic_httpd  ##@atomic create image
+atomic_image: atomic_generate_tpl atomic_repo_init atomic_httpd  ##@atomic create image
 ifeq (00,$(LAST_BUILD_NUM))
 	$(error make atomic_prepare_image_dir first)
 endif

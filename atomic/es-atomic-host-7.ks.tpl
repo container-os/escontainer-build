@@ -7,10 +7,12 @@ auth --useshadow --passalgo=sha512
 selinux --enforcing
 rootpw --lock --iscrypted locked
 user --name=none
+{% if OSTREE_ENABLE_DEFAULT_USER|default("false") == "true" %}
 
 # set default user
 user --name=es --password=rootroot --groups=wheel
 
+{% endif %}
 firewall --disabled
 
 bootloader --timeout=1 --append="no_timer_check console=tty1 console=ttyS0,115200n8"
