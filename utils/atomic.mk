@@ -35,8 +35,8 @@ endif
 
 JSON_FILE = $(OSTREE_IMGDIR)/seed/atomic.json
 
-include utils/ostree.mk
-include utils/vm.mk
+include utils/atomic/ostree.mk
+include utils/atomic/vm.mk
 
 atomic_json:  ##@atomic_debug force generate json
 	rm -f $(JSON_FILE)
