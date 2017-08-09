@@ -123,7 +123,6 @@
                  "cockpit-ostree",
 		 "setools-console",
 		 "atomic-devmode",
-		 "docker-latest",
 		 "docker-lvm-plugin",
 		 "docker-novolume-plugin",
                  "ceph-common", "device-mapper-multipath",
