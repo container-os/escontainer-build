@@ -1,0 +1,5 @@
+OSTREE_REPO = /srv/ostree
+OSTREE_BUILD_SCRIPTS_DIR = /srv/escore-build/atomic
+OSTREE_SERV_PORT = 11887
+
+OSTREE_ENABLE_DEFAULT_USER = false

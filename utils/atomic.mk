@@ -1,5 +1,8 @@
 # Common variable
 
+DEFAULT_OSTREE_REPO_REF = es-atomic-host/7/x86_64/standard
+DEFAULT_HOST = es-atomic-host
+
 OSTREE_REPO ?= /srv/ostree
 OSTREE_REPO_NAME ?= es-atomic-host
 OSTREE_BUILD_SCRIPTS_DIR ?= /srv/escore-build/atomic
