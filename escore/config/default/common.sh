@@ -29,5 +29,8 @@ VAULT_EASYSTACK_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/easy
 VAULT_ATOMIC_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/atomic/x86_64/
 
 # Set the git repo location and a list of required packages.
+# In the REPO_ARRAY, we also support git clone with specified branch.
+# If the element is 'lorax', it means we want to clone lorax's default branch.
+# If the element is 'lorax/test-dev', it means we want to clone lorax's "test-dev" branch.
 REPO_LOCATION=git@github.com:easystack
 REPO_ARRAY=(lorax anaconda escore-release escore-logos yum qemu-kvm libvirt escore_kernel openvswitch)

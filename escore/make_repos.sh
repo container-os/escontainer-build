@@ -24,8 +24,26 @@ mkdir -p ${ES_SOURCE_SPACKAGES_DIR}
 
 # Clone all the necessary EasyStack packages and build rpm.
 for REPO in ${REPO_ARRAY[@]}; do
+  # Clone each REPO from REPO_ARRAY.
+  # We can clone its branch if necessary.
+  #
+  # Example1:
+  #   Assume that REPO is 'lorax'
+  #   then REPO_BRANCH will be empty string
+  #   and REPO will be 'lorax'
+  #
+  # Example2:
+  #   Assume that REPO is 'lorax/test-dev'
+  #   then REPO_BRANCH will be '-b test-dev'
+  #   and REPO will be 'lorax'
   cd ${ES_PKGSRC_DIR}
-  git clone ${REPO_LOCATION}/${REPO}.git
+  REPO_BRANCH=
+  if echo ${REPO} | grep -e "/"; then
+    REPO_BRANCH="-b ${REPO#*/}"
+    REPO=${REPO%/*}
+  fi
+  git clone ${REPO_LOCATION}/${REPO}.git ${REPO_BRANCH}
+
   # For each package, we call rpmgen_mock.sh to create its source rpm
   # and binary rpm under mock environment.
   cd ./${REPO}/
