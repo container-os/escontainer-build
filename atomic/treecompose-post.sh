@@ -330,10 +330,10 @@ busybox rm -f /usr/sbin/hdparm
 busybox rm -f /usr/sbin/httpd
 busybox rm -f /usr/sbin/hwclock
 busybox rm -f /usr/sbin/ifconfig
-busybox rm -f /usr/sbin/ifdown
+# busybox rm -f /usr/sbin/ifdown
 busybox rm -f /usr/sbin/ifenslave
 busybox rm -f /usr/sbin/ifplugd
-busybox rm -f /usr/sbin/ifup
+# busybox rm -f /usr/sbin/ifup
 busybox rm -f /usr/sbin/inetd
 # use systemd init directly
 # busybox rm -f /usr/sbin/init
