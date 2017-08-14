@@ -42,7 +42,7 @@ for REPO in ${REPO_ARRAY[@]}; do
     REPO_BRANCH="-b ${REPO#*/}"
     REPO=${REPO%/*}
   fi
-  git clone ${REPO_LOCATION}/${REPO}.git ${REPO_BRANCH} --depth 1
+  git clone ${REPO_LOCATION}/${REPO}.git ${REPO_BRANCH}
 
   # For each package, we call rpmgen_mock.sh to create its source rpm
   # and binary rpm under mock environment.
