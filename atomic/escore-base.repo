@@ -1,6 +1,39 @@
-[escore-base]
-name=ESCore-7 - Base
-baseurl=http://10.60.0.129/escore-release/escore7/
+[escore-os]
+name=ESCore-7 - os
+baseurl=http://mirror.easystack.io/ESCL/vault.es/os/x86_64/
 enabled=1
 gpgcheck=0
-gpgkey=http://10.60.0.129/escore-release/escore7/RPM-GPG-KEY-ESCore-7
+username=escore
+password=escore
+
+[escore-updates]
+name=ESCore-7 - updates
+baseurl=http://mirror.easystack.io/ESCL/vault.es/updates/x86_64/
+enabled=1
+gpgcheck=0
+username=escore
+password=escore
+
+[escore-extras]
+name=ESCore-7 - extras
+baseurl=http://mirror.easystack.io/ESCL/vault.es/extras/x86_64/
+enabled=1
+gpgcheck=0
+username=escore
+password=escore
+
+[escore-easystack]
+name=ESCore-7 - easystack
+baseurl=http://mirror.easystack.io/ESCL/vault.es/easystack/x86_64/
+enabled=1
+gpgcheck=0
+username=escore
+password=escore
+
+[escore-atomic]
+name=ESCore-7 - atomic
+baseurl=http://mirror.easystack.io/ESCL/vault.es/atomic/x86_64/
+enabled=1
+gpgcheck=0
+username=escore
+password=escore

@@ -4,9 +4,8 @@
     "osname": "es-atomic-host",
     "ref": "es-atomic-host/7/x86_64/standard",
 
-    "repos": ["CentOS-Base", "CentOS-updates", "CentOS-extras",
-              "rhel-atomic-rebuild", "escore-base",
-	      "escore-testing"],
+    "repos": ["escore-os", "escore-updates", "escore-easystack",
+	      "escore-extras", "escore-atomic"],
 
     "selinux": true,
 
