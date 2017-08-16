@@ -17,3 +17,6 @@ escore_clean:  ##@escore cleanup mock cache and all the stuff we created.
 
 escore_shell: $(COMMON_CFG)  ##@escore Enter mock environment if one would like to try some commands.
 	cd $(ESCORE_BASE_DIR); ./shell.sh
+
+escore_dump_rpminfo:  ##@escore dump package info from repos
+	./utils/dump_rpminfo.py
