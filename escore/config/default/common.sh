@@ -33,4 +33,4 @@ VAULT_ATOMIC_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/atomic/
 # If the element is 'lorax', it means we want to clone lorax's default branch.
 # If the element is 'lorax/test-dev', it means we want to clone lorax's "test-dev" branch.
 REPO_LOCATION=git@github.com:easystack
-REPO_ARRAY=(lorax anaconda escore-release escore-logos yum qemu-kvm libvirt escore_kernel openvswitch)
+REPO_ARRAY=(lorax anaconda escore-release escore-logos yum qemu-kvm libvirt escore_kernel openvswitch escore-indexhtml)
