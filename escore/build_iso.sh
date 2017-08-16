@@ -38,8 +38,11 @@ source ./common.sh
 # which will be included in the iso image so that we have local media repository at installation stage.
 # Note that we use vault repository because it contains complete development and GUI rpm files
 # for lorax to create installation environment.
-/usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso" \
---chroot "lorax -p 'EasyStack Cloud Linux' -v 7.3 -r 7.3 -s ${VAULT_OS_REPO} -s ${VAULT_EASYSTACK_REPO} -s ${VAULT_ATOMIC_REPO} --isfinal --customfield /buildiso/escore_repo /buildiso/result"
+# In addition, we have both escontos-release and escore-release packages which may cause installation conflict.
+# The escontos-release is used in Container Linux and the escore-release is used in Cloud Linux.
+# So here we use "-e 'escontos-release'" to exclude escontos-release package. 
+/usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --cwd="/buildiso" --chroot "lorax -p 'EasyStack Cloud Linux' -v 7.3 -r 7.3 \
+-s ${VAULT_OS_REPO} -s ${VAULT_EASYSTACK_REPO} -s ${VAULT_ATOMIC_REPO} -e 'escontos-release' --isfinal --customfield /buildiso/escore_repo /buildiso/result"
 
 # Finally we copy the result iso out of mock environment.
 /usr/bin/mock -r escl-7-x86_64.cfg --rootdir `pwd`/chroot/ --copyout /buildiso/result/images/boot.iso escore.iso
