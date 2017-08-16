@@ -1,5 +1,20 @@
-OSTREE_REPO = /srv/ostree
-OSTREE_BUILD_SCRIPTS_DIR = /srv/escore-build/atomic
-OSTREE_SERV_PORT = 11887
+# the root path to OSTree repository directory, all ostree repository
+# will be stored inside the path.
+# OSTREE_REPO = /srv/ostree
 
-OSTREE_ENABLE_DEFAULT_USER = false
+# define the repository name, all ostree operations will be performed
+# on the repository. 
+# OSTREE_REPO_NAME = es-atomic-host
+
+# the ref (branch) one want to perfrom on.
+# OSTREE_REPO_REF = es-atomic-host/7/x86_64/standard 
+
+# specify the root path where the building scripts locate in.
+# OSTREE_BUILD_SCRIPTS_DIR = /srv/escore-build/atomic
+
+# specify the host and port of the remote ostree repository.
+# OSTREE_SERV_HOST = 192.168.122.1
+# OSTREE_SERV_PORT = 11887
+
+# declare whether enable default user 'es' when building aotmic image host.
+# OSTREE_ENABLE_DEFAULT_USER = false
