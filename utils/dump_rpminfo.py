@@ -1,15 +1,14 @@
 #!/usr/bin/python
+import argparse
 import json
 import shutil
 import tempfile
 
 import yum
 
-tags = ['os', 'atomic']
 release = '7.3.1611'
 arch = 'x86_64'
 baseurl = "http://mirror.easystack.io/ESCL/"
-fn = 'escore/rpms.json'
 
 
 def setup_repo(repoid, cache=None):
@@ -46,12 +45,26 @@ def fetch_rpms(repo):
             specs.append(spec)
     return specs
 
-specs = []
-for tag in tags:
-    cache = tempfile.mkdtemp()
-    repo = setup_repo(tag, cache)
-    specs.extend(fetch_rpms(repo))
-    shutil.rmtree(cache)
+if __name__ == '__main__':
 
-with open(fn, 'w') as outfile:
-    json.dump(specs, outfile, indent=2)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('tags', metavar='repo', nargs='*',
+                        default=['os', 'atomic'], 
+                        help='repo tag to dump rpms data')
+    parser.add_argument('--cache',  help='cache dir')
+    parser.add_argument('--output', '-o', default='escore/rpms.json')
+    args = parser.parse_args()
+
+    specs = []
+    for tag in args.tags:
+        if args.cache:
+            cache = args.cache
+        else:
+            cache = tempfile.mkdtemp()
+        repo = setup_repo(tag, cache)
+        specs.extend(fetch_rpms(repo))
+        if not args.cache:
+            shutil.rmtree(cache)
+
+    with open(args.output, 'w') as outfile:
+        json.dump(specs, outfile, indent=2)
