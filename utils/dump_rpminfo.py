@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import json
+import shutil
+import tempfile
 
 import yum
 
@@ -10,11 +12,14 @@ baseurl = "http://mirror.easystack.io/ESCL/"
 fn = 'escore/rpms.json'
 
 
-def setup_repo(repoid):
+def setup_repo(repoid, cache=None):
     url = "{}/{}/{}/{}".format(baseurl, release, repoid, arch)
+
     newrepo = yum.yumRepo.YumRepository(repoid)
     newrepo.name = repoid
     newrepo.baseurl = [url]
+    if cache:
+        newrepo.basecachedir = cache
     return newrepo
 
 
@@ -41,11 +46,12 @@ def fetch_rpms(repo):
             specs.append(spec)
     return specs
 
-
 specs = []
 for tag in tags:
-    repo = setup_repo(tag)
+    cache = tempfile.mkdtemp()
+    repo = setup_repo(tag, cache)
     specs.extend(fetch_rpms(repo))
+    shutil.rmtree(cache)
 
 with open(fn, 'w') as outfile:
     json.dump(specs, outfile, indent=2)
