@@ -47,10 +47,19 @@ endif
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); ln -s -f $(JSON_FILE) es-atomic-host.json
 
 atomic_httpd: atomic_env_check  ##@atomic_prepare httpd
+ifeq (yes,$(OSTREE_REPO_SERVICE_IS_LOCAL))
 ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
 	ostree trivial-httpd -P ${OSTREE_SERV_PORT} ${OSTREE_REPO}/${OSTREE_REPO_NAME} & echo "$$!" > ${OSTREE_REPO}/trivial-httpd.pid
 else
 	$(warning ostree service started)
+endif
+endif
+ifeq (no,$(OSTREE_REPO_SERVICE_IS_LOCAL))
+ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
+	$(error remote ostree service does not started)
+else
+	$(warning remote ostree service started)
+endif
 endif
 
 atomic_httpd_stop: atomic_env_check  ##@atomic_prepare stop httpd
@@ -72,9 +81,12 @@ endif
 ifneq (no,$(FORCE_COMPOSE))
 	make -s atomic_compose
 endif
-	make -s atomic_httpd
 	cd /tmp; rpm-ostree-toolbox imagefactory -c ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-config.ini -i kvm --ostreerepo ${OSTREE_REPO}/${OSTREE_REPO_NAME} -o ${OSTREE_IMGDIR} --no-compression --overwrite
+ifeq (yes,$(OSTREE_REPO_SERVICE_IS_LOCAL))
+ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
 	make -s atomic_httpd_stop
+endif
+endif
 	@echo OSTREE_IMGDIR: ${OSTREE_IMGDIR}
 ifneq (0,$(SUDO_UID))
 	@chown -R $(SUDO_UID):$(SUDO_GID) $(OSTREE_IMGDIR)

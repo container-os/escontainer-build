@@ -36,6 +36,7 @@ RPM_OSTREE_TOOLBOX_INSTALLED = $(shell rpm-ostree-toolbox > /dev/null 2>&1  && e
 OSTREE_REPO_CREATED = $(shell test -e ${OSTREE_REPO}/${OSTREE_REPO_NAME} && echo "yes" || echo "no")
 OSTREE_REPO_SERVICE_PORT_USED = $(shell utils/check_port.py --host ${OSTREE_SERV_HOST} --port ${OSTREE_SERV_PORT})
 OSTREE_REPO_SERVICE_STARTED = $(shell utils/check_port.py --host ${OSTREE_SERV_HOST} --port ${OSTREE_SERV_PORT})
+OSTREE_REPO_SERVICE_IS_LOCAL = $(shell utils/check_ip.py --host ${OSTREE_SERV_HOST})
 endif
 
 JSON_FILE = $(OSTREE_IMGDIR)/seed/atomic.json
