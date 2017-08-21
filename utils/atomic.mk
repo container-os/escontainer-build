@@ -12,6 +12,8 @@ OSTREE_SERV_PORT ?= 11887
 
 FORCE_COMPOSE ?= no
 
+export
+
 OSTREE_BASE_IMGDIR = $(OSTREE_REPO)/$(OSTREE_REPO_NAME)/images
 
 DATE = $(shell date +%y%m%d)
