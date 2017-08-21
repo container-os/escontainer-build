@@ -9,6 +9,7 @@ def bool_to_str(value):
 
 
 def is_open(ip, port):
+    socket.setdefaulttimeout(0.1)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         s.connect((ip, int(port)))
