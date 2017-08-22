@@ -3638,7 +3638,6 @@
       <packagereq type="optional">openscap</packagereq>
       <packagereq type="optional">openscap-utils</packagereq>
       <packagereq type="optional">scap-security-guide-doc</packagereq>
-      <packagereq type="optional">scap-workbench</packagereq>
       <packagereq type="optional">strongimcv</packagereq>
       <packagereq type="optional">tncfhh</packagereq>
       <packagereq type="optional">tpm-quote-tools</packagereq>
