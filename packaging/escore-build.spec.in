@@ -1,0 +1,35 @@
+Name: escore-build
+Version: 2017.08
+Release: 1%{?dist}
+
+Summary: Build scripts for Esaystack Container/Cloud Linux
+
+Source0: %{name}-%{version}.tar.xz
+License: GPLv2
+URL: https://github.com/easystack/escore-build
+Requires: make
+Requires: python-jinja2
+Requires: rpm-ostree
+Requires: rpm-ostree-toolbox
+Requires: genisoimage
+
+%description
+Various utilities and scripts for working with rpm-ostree based
+operating systems, particularly as virtual machines.
+
+%prep
+%setup -q -n %{name}-%{version}
+
+%build
+
+%install
+mkdir -p %{buildroot}/opt/%{name}
+cp -rvf * %{buildroot}/opt/%{name}
+
+%files
+%defattr(-,root,root,-)
+/opt/%{name}
+
+%changelog
+* Tue Jun 27 2017 Shawn Wang <shawn.wang@easystack.cn>
+- Initial package

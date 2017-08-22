@@ -1,28 +1,12 @@
-# Esaystack ContainerOS build scripts (escontos-buildscripts) (obsolete)
-
-----
-We're merging escontos-buildscripts into escore-build.
-----
-
-## How to use escontos-buildscripts.
-
-We use Makefile to help us maintain ostree repo.
-```
-# If you don't have escontos-buildscripts, please install escontos-buildscripts by yum.
-# install atomic related packages, we are planing to maintain those packages.
-yum-config-manager --add-repo http://buildlogs.centos.org/centos/7/atomic/x86_64/Packages
-# rpm-ostree buildscripts are stored at /opt/escontos-buildscripts
-yum install escontos-buildscripts
-
-# To run ostree commands
-cd /opt/escontos-buildscripts
-
-# cp envrc.examle to envrc and edit it
-
-make help # list common commands and usage
-```
+# Esaystack ContainerOS build scripts
 
 ## Common commands
+
+### get started
+```
+# cp envrc.example to envrc and edit it
+please see the detail comment for each entry in example file
+```
 
 ### compose repo
 ```
@@ -30,32 +14,22 @@ make help # list common commands and usage
 # export OSTREE_REPO_NAME=escontos
 # export OSTREE_BUILD_SCRIPTS_DIR=/opt/escontos-buildscripts
 
-make compose
+make atomic_compose
 ```
 
 ### create guest image
 ```
-make image
-
-IMGDIR=/tmp/disc make image # change default result image dir
+make atomic_image
 ```
 
-## Maintain escontos-buildscripts 
+## build atomic releated targets need packages from remote http repo server, so please make sure
+the below web server can be accessed.
 
 ```
-# install rpmbuild
-sudo yum install rpm-build
-
-git clone git@github.com:easystack/containeros-buildscripts.git
-cd containeros-buildscripts
-
-# if you want to create new version, use git tag to define new version
-git tag v<new-version>
-git push origin v<new-version>
-
-# build results: .build/
-make rpm
-```
+http://[server]/ESCL/vault.es/os
+http://[server]/ESCL/vault.es/updates
+http://[server]/ESCL/7.3.1611/atomic/atomic-anaconda/ (used for make atmoic_image)
+``
 
 # sig-atomic-buildscripts
 
@@ -68,7 +42,4 @@ https://wiki.centos.org/SpecialInterestGroup/Atomic/ReleaseSOP
 
 ### Contributing
 
-Discuss on http://lists.centos.org/pipermail/centos-devel/
-
-
-
+Discuss on https://github.com/easystack/escore-build
