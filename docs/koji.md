@@ -2,7 +2,7 @@
 
 Koji 运用tag的观念让我们可以管理package与repo之间的关联性
 
-- Package 产出流程
+- [Package 产出流程](koji-pkg-life.md)
   * Package (tag) > Build (tag)> RPM (repo)
 - Package 可以订定 tag
 - 每版Build 需指定 产出之 tag
