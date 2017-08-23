@@ -5,6 +5,8 @@ else
 endif
 
 include utils/help.mk
-include utils/packaging.mk
+ifeq (yes,$(shell test -e /usr/bin/git && test -d .git && echo "yes" || echo "no"))
+    include utils/packaging.mk
+endif
 include utils/escore.mk
 include utils/atomic.mk
