@@ -14,7 +14,6 @@ USER_DATA = $(SEED)/user-data
 
 # "virsh dominfo obsx" check vm instance status
 HOST ?= $(DEFAULT_HOST)_${DATE}-${LAST_BUILD_NUM}
-HOSTS = $(shell virsh list --all --name | grep ${DEFAULT_HOST}_)
 PASSWORD ?= passw0rd
 
 $(SEED):
@@ -69,14 +68,15 @@ atomic_vm_console:  ##@atomic_vm connect to current host, or HOST=<xxx> make ato
 	virsh console $(HOST)
 
 atomic_vm_list:  ##@atomic_vm list all atomic host vms
-	@echo $(HOSTS)
+	@echo $(shell virsh list --all --name | grep ${DEFAULT_HOST}_)
 
 atomic_vm_destroy:  ##@atomic_vm destroy current host
 	virsh destroy $(HOST)
 	virsh undefine $(HOST)
 
 atomic_vm_destroy_all:  ##@atomic_vm destroy all atomic host vms
-	@for i in $(HOSTS);      \
+	@HOSTS = $(shell virsh list --all --name | grep ${DEFAULT_HOST}_)
+	for i in $(HOSTS);      \
 	do                       \
 	  virsh destroy $$i;     \
 	  virsh undefine $$i;    \
