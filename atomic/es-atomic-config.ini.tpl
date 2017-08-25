@@ -3,7 +3,7 @@
 outputdir   =
 # workdir     = 
 # srcdir      = os.path.join(os.path.dirname(sys.argv[0], '..')
-os_name     = es-atomic-host
+os_name     = {{ OSTREE_REPO_NAME }}
 os_pretty_name = Easystack Atomic Host
 docker_os_name = es-atomic/escore-lite-builder
 tree_name   = standard
@@ -16,12 +16,10 @@ ref         = %(os_name)s/%(release)s/%(arch)s/%(tree_name)s
 lorax_exclude_packages = oscap-anaconda-addon
 
 # Base repository
-#yum_baseurl = http://mirror.centos.org/centos/%(release)s/os/%(arch)s/
 yum_baseurl = http://escore:escore@mirror.easystack.io/ESCL/7.3.1611/os/x86_64
 
 # Repositories above and beyond yum_baseurl that lorax can use to compose ISO content.
 # These need to be provides in a comma separated list.
-#lorax_additional_repos = http://mirror.centos.org/centos/%(release)s/updates/%(arch)s/, http://buildlogs.centos.org/centos/7/atomic/x86_64/Packages/, http://cbs.centos.org/repos/atomic7-testing/x86_64/os/
 lorax_additional_repos = http://escore:escore@mirror.easystack.io/ESCL/7.3.1611/os/x86_64, http://escore:escore@mirror.easystack.io/ESCL/7.3.1611/updates/x86_64/
 
 vsphere_product_name = ESCore Lite Host
