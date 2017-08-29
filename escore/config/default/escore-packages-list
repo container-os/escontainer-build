@@ -621,6 +621,7 @@ libatomic
 libattr
 libbasicobjects
 libblkid
+libcacard
 libcap
 libcap-ng
 libcgroup
