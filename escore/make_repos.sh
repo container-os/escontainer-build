@@ -23,9 +23,20 @@ mkdir -p ${ES_X8664_PACKAGES_DIR}
 mkdir -p ${ES_SOURCE_SPACKAGES_DIR}
 
 # Clone all the necessary EasyStack packages and build rpm.
-for REPO in ${REPO_ARRAY[@]}; do
-  # Clone each REPO from REPO_ARRAY.
-  # We can clone its branch if necessary.
+for REPO_ELT in ${REPO_PACKAGE_ARRAY[@]}; do
+  # Pick repo element from the array one by one.
+  # Each one is in the form of "INDEX:PACKAGE[/BRANCH]"
+  # in which we can extract information into:
+  #   IDX   <-- INDEX
+  #   REPO  <-- PACKAGE[/BRANCH]
+
+  # remove suffix after ':' character.
+  IDX=${REPO_ELT%:*}
+  # remove prefix before ':' character.
+  REPO=${REPO_ELT#*:}
+
+  # Then we can locate the git location with ${REPO_LOCATION_ARRAY[${IDX}]}
+  # Also, we need to determine its branch if necessary.
   #
   # Example1:
   #   Assume that REPO is 'lorax'
@@ -36,13 +47,20 @@ for REPO in ${REPO_ARRAY[@]}; do
   #   Assume that REPO is 'lorax/test-dev'
   #   then REPO_BRANCH will be '-b test-dev'
   #   and REPO will be 'lorax'
-  cd ${ES_PKGSRC_DIR}
+
+  # by default REPO_BRANCH is null string.
   REPO_BRANCH=
   if echo ${REPO} | grep -e "/"; then
+    # remove prefix before '/', so we have branch here.
     REPO_BRANCH="-b ${REPO#*/}"
+    # remove suffix after '/', so only repo name is left.
     REPO=${REPO%/*}
   fi
-  git clone ${REPO_LOCATION}/${REPO}.git ${REPO_BRANCH}
+
+  # Clone the package.
+  echo "git clone ${REPO_LOCATION_ARRAY[${IDX}]}/${REPO}.git ${REPO_BRANCH}"
+  cd ${ES_PKGSRC_DIR}
+  git clone ${REPO_LOCATION_ARRAY[${IDX}]}/${REPO}.git ${REPO_BRANCH}
 
   # For each package, we call rpmgen_mock.sh to create its source rpm
   # and binary rpm under mock environment.
