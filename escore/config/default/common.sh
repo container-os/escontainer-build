@@ -28,9 +28,51 @@ VAULT_UPDATES_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/update
 VAULT_EASYSTACK_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/easystack/x86_64/
 VAULT_ATOMIC_REPO=http://${USERNAME}:${PASSWORD}@${SERVER}/ESCL/vault.es/atomic/x86_64/
 
-# Set the git repo location and a list of required packages.
-# In the REPO_ARRAY, we also support git clone with specified branch.
-# If the element is 'lorax', it means we want to clone lorax's default branch.
-# If the element is 'lorax/test-dev', it means we want to clone lorax's "test-dev" branch.
-REPO_LOCATION=git@github.com:easystack
-REPO_ARRAY=(lorax anaconda escore-release escore-logos yum qemu-kvm libvirt escore_kernel openvswitch escore-indexhtml)
+# We prepare an array that contains all the possible repo locations.
+#   REPO_LOCATION_ARRAY[0] ==> git@github.com:easystack
+#   REPO_LOCATION_ARRAY[1] ==> git@10.60.0.129:ESCL_LinuxDistroRelated
+# This array is to provide a index <--> location mapping.
+REPO_LOCATION_ARRAY=\
+(
+  git@github.com:easystack
+  git@10.60.0.129:ESCL_LinuxDistroRelated
+)
+
+# We also use an array to descirbe required packages.
+# Each element is in the syntax: INDEX:PACKAGE[/BRANCH]
+#   INDEX is the index to REPO_LOCATION_ARRAY
+#   PACKAGE is the package name
+#   BRANCH is the package's branch name
+#
+# Example 1: "0:qemu-kvm"
+#            --> git clone git@github.com:easystack/qemu-kvm.git
+
+# Example 2: "1:lorax/test-dev
+#            --> git clone git@10.60.0.129:ESCL_LinuxDistroRelated/lorax.git -b test-dev
+REPO_PACKAGE_ARRAY=\
+(
+  1:escore-release
+  1:escore-logos
+  1:escore-indexhtml
+  1:escore-lib32
+  1:lorax
+  1:anaconda
+  1:yum
+  1:yum-utils
+  1:cloud-init
+  1:initial-setup
+  1:dhcp
+  1:httpd
+  1:ipa
+  1:kabi-yum-plugins
+  1:openssl098e
+  1:redhat-lsb
+  1:redhat-rpm-config
+  1:sos
+  1:libreport
+  1:xulrunner
+  0:escore_kernel
+  0:qemu-kvm
+  0:libvirt
+  0:openvswitch
+)
