@@ -94,8 +94,6 @@
                              ["escore-logos", "/usr/share/backgrounds",
                                               "/usr/share/kde4",
                                               "/usr/share/anaconda"],
-			     ["which", "/etc/profile.d/.*"],
-			     ["grep", "/etc/profile.d/.*"],
 			     ["systemd", "/usr/lib/tmpfiles.d/tmp.conf"],
                              ["rsyslog", "/etc/logrotate.d/syslog"],
                              ["docker", "/etc/sysconfig/docker-storage-setup",
