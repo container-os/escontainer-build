@@ -335,7 +335,8 @@ busybox rm -f /usr/sbin/ifenslave
 busybox rm -f /usr/sbin/ifplugd
 busybox rm -f /usr/sbin/ifup
 busybox rm -f /usr/sbin/inetd
-busybox rm -f /usr/sbin/init
+# use systemd init directly
+# busybox rm -f /usr/sbin/init
 # busybox rm -f /usr/sbin/insmod
 # busybox rm -f /usr/sbin/ip
 busybox rm -f /usr/sbin/ipaddr
