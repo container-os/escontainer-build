@@ -82,12 +82,12 @@ ifneq (no,$(FORCE_COMPOSE))
 	make -s atomic_compose
 endif
 ifeq (yes,$(OSTREE_REPO_SERVICE_IS_LOCAL))
-	cd /tmp; rpm-ostree-toolbox imagefactory -c ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-config.ini -i kvm --ostreerepo ${OSTREE_REPO}/${OSTREE_REPO_NAME} -o ${OSTREE_IMGDIR} --no-compression --overwrite
+	cd /tmp; rpm-ostree-toolbox imagefactory -c ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-config.ini -k ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-host-7.ks --tdl ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-host-7.tdl -i kvm --ostreerepo ${OSTREE_REPO}/${OSTREE_REPO_NAME} -o ${OSTREE_IMGDIR} --no-compression --overwrite
 ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
 	make -s atomic_httpd_stop
 endif
 else
-	cd /tmp; rpm-ostree-toolbox imagefactory -c ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-config.ini -i kvm --ostreerepo http://${OSTREE_SERV_HOST}:${OSTREE_SERV_PORT} -o ${OSTREE_IMGDIR} --no-compression --overwrite
+	cd /tmp; rpm-ostree-toolbox imagefactory -c ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-config.ini -k ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-host-7.ks --tdl ${OSTREE_BUILD_SCRIPTS_DIR}/es-atomic-host-7.tdl -i kvm --ostreerepo http://${OSTREE_SERV_HOST}:${OSTREE_SERV_PORT} -o ${OSTREE_IMGDIR} --no-compression --overwrite
 endif
 	@echo OSTREE_IMGDIR: ${OSTREE_IMGDIR}
 ifneq (0,$(SUDO_UID))
