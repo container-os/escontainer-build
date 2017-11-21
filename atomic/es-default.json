@@ -99,7 +99,7 @@
                              ["docker", "/etc/sysconfig/docker-storage-setup",
                                         "/usr/bin/docker-storage-setup"]],
 
-    "units": ["docker.service", "tuned.service", "docker-storage-setup.service", "cockpit.socket"],
+    "units": ["docker.service", "docker-storage-setup.service"],
 
     "default_target": "multi-user.target",
     "add-files": [["add-files/eslite.sh", "/usr/etc/profile.d/eslite.sh"],
