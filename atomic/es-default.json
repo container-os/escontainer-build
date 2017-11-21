@@ -88,7 +88,8 @@
       "ostree-grub2",
       "passwd",
       "rpm-ostree-client",
-      "sudo"],		 
+      "sudo",
+      "setools-console"],		 
 
     "remove-from-packages": [["filesystem", "/usr/share/backgrounds"],
                              ["escore-logos", "/usr/share/backgrounds",

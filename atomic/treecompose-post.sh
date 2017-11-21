@@ -106,7 +106,7 @@ busybox rm -f /usr/bin/logger
 busybox rm -f /usr/bin/logname
 busybox rm -f /usr/bin/lpq
 busybox rm -f /usr/bin/lpr
-busybox rm -f /usr/bin/ls
+# busybox rm -f /usr/bin/ls
 busybox rm -f /usr/bin/lsattr
 busybox rm -f /usr/bin/lsof
 busybox rm -f /usr/bin/lspci
@@ -151,7 +151,7 @@ busybox rm -f /usr/bin/pkill
 busybox rm -f /usr/bin/pmap
 busybox rm -f /usr/bin/printenv
 busybox rm -f /usr/bin/printf
-busybox rm -f /usr/bin/ps
+# busybox rm -f /usr/bin/ps
 busybox rm -f /usr/bin/pscan
 busybox rm -f /usr/bin/pstree
 busybox rm -f /usr/bin/pwd
