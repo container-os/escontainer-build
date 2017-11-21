@@ -91,7 +91,8 @@
       "sudo",
       "setools-console",
       "openssh-server", "openssh-clients",
-      "pygobject3-base"],
+      "pygobject3-base",
+      "procps-ng"],
 
     "remove-from-packages": [["filesystem", "/usr/share/backgrounds"],
                              ["escore-logos", "/usr/share/backgrounds",
