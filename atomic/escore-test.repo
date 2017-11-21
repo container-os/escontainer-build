@@ -1,0 +1,5 @@
+[escore-test]
+name=ESCore-7 - test
+baseurl=ftp://10.60.0.129/testing_repo/
+enabled=1
+gpgcheck=0
