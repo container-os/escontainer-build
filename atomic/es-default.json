@@ -81,7 +81,7 @@
       "dracut-network",
       "escontos-release",
       "grub2",
-      "kernel-lite",
+      "kernel-lt",
       "lvm2",
       "nss-altfiles",
       "NetworkManager",
