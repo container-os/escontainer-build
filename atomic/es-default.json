@@ -58,6 +58,7 @@
 
     "documentation": false,
 
+    "generate_initramfs": false,
     "initramfs-args": ["--no-hostonly", "--add", "iscsi"],
     "automatic_version_prefix": "7.20170428",
     "mutate-os-release": "7", 
