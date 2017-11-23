@@ -85,7 +85,7 @@ busybox rm -f /usr/bin/hexdump
 busybox rm -f /usr/bin/hostid
 busybox rm -f /usr/bin/hostname
 busybox rm -f /usr/bin/hush
-busybox rm -f /usr/bin/id
+# busybox rm -f /usr/bin/id
 busybox rm -f /usr/bin/install
 busybox rm -f /usr/bin/ionice
 busybox rm -f /usr/bin/iostat
