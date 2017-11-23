@@ -1,6 +1,6 @@
 [escore-os]
 name=ESCore-7 - os
-baseurl=http://mirror.easystack.io/ESCL/vault.es/os/x86_64/
+baseurl=http://mirror.easystack.io/ESCL/vault.es/7.3.1611/os/x86_64/
 enabled=1
 gpgcheck=0
 username=escore
