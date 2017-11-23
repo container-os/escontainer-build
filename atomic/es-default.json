@@ -78,7 +78,6 @@
       "cloud-init",
       "cloud-utils-growpart",
       "docker",
-      "dracut-network",
       "escontos-release",
       "grub2",
       "kernel-lt",
