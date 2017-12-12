@@ -77,7 +77,7 @@
       "busybox",
       "cloud-init",
       "cloud-utils-growpart",
-      "docker",
+      "docker-ce",
       "escontos-release",
       "grub2",
       "kernel-lt",
@@ -98,17 +98,13 @@
                                               "/usr/share/kde4",
                                               "/usr/share/anaconda"],
 			     ["systemd", "/usr/lib/tmpfiles.d/tmp.conf"],
-                             ["rsyslog", "/etc/logrotate.d/syslog"],
-                             ["docker", "/etc/sysconfig/docker-storage-setup",
-                                        "/usr/bin/docker-storage-setup"]],
+                             ["rsyslog", "/etc/logrotate.d/syslog"]],
 
-    "units": ["docker.service", "docker-storage-setup.service"],
+    "units": ["docker.service"],
 
     "default_target": "multi-user.target",
     "add-files": [["add-files/eslite.sh", "/usr/etc/profile.d/eslite.sh"],
                   ["add-files/tmp.conf", "/usr/lib/tmpfiles.d/tmp.conf"],
                   ["add-files/syslog.logrotate.conf", "/usr/etc/logrotate.d/syslog"],
-		  ["add-files/swap.conf", "/usr/lib/sysctl.d/60-swap.conf"],
-		  ["add-files/docker-storage-setup.cfg", "/usr/etc/sysconfig/docker-storage-setup"],
-                  ["add-files/bin-storage-setup", "/usr/bin/docker-storage-setup"]]
+                  ["add-files/swap.conf", "/usr/lib/sysctl.d/60-swap.conf"]]
 }
