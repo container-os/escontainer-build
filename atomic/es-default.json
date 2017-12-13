@@ -98,8 +98,9 @@
                              ["escore-logos", "/usr/share/backgrounds",
                                               "/usr/share/kde4",
                                               "/usr/share/anaconda"],
-			     ["systemd", "/usr/lib/tmpfiles.d/tmp.conf"],
-                             ["rsyslog", "/etc/logrotate.d/syslog"]],
+                             ["systemd", "/usr/lib/tmpfiles.d/tmp.conf"],
+                             ["rsyslog", "/etc/logrotate.d/syslog"],
+                             ["ostree", "/usr/libexec/libostree/ostree-trivial-httpd"]],
 
     "units": ["docker.service", "easystack-storage-setup.service"],
 
