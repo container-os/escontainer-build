@@ -6,7 +6,7 @@ timezone --utc Etc/UTC
 auth --useshadow --passalgo=sha512
 selinux --enforcing
 rootpw --lock --iscrypted locked
-user --name=none
+
 {% if OSTREE_ENABLE_DEFAULT_USER|default("false") == "true" %}
 
 # set default user
@@ -23,7 +23,7 @@ services --enabled=sshd,rsyslog,cloud-init,cloud-init-local,cloud-config,cloud-f
 services --disabled=network,avahi-daemon
 
 zerombr
-clearpart --all
+clearpart --initlabel --all
 
 part /boot --size=300 --fstype="xfs"
 part swap --size=8000
@@ -31,7 +31,7 @@ part pv.01 --size=4700
 part pv.02 --size=5000 --grow
 volgroup atomicos pv.01
 volgroup docker pv.02
-logvol / --size=4000  --fstype="xfs" --name=root --vgname=atomicos --grow
+logvol / --size=4000  --fstype="xfs" --name=root --vgname=atomicos
 
 # Equivalent of %include fedora-repo.ks
 ostreesetup --osname="{{ OSTREE_REPO_NAME }}" --remote="{{ OSTREE_REPO_NAME }}" --ref="{{ OSTREE_REPO_REF }}" --url="http://{{ OSTREE_SERV_HOST }}:{{OSTREE_SERV_PORT }}" --nogpg
@@ -66,7 +66,7 @@ truncate -s 0 /etc/resolv.conf
 # https://bugzilla.redhat.com/show_bug.cgi?id=964299
 passwd -l root
 # remove the user anaconda forces us to make
-userdel -r none
+#userdel -r none
 
 # If you want to remove rsyslog and just use journald, remove this!
 echo -n "Disabling persistent journal"
@@ -139,6 +139,17 @@ rpm -qa
 echo "-----------------------------------------------------------------------"
 # Note that running rpm recreates the rpm db files which aren't needed/wanted
 rm -f /var/lib/rpm/__db*
+
+# Anaconda is writing a /etc/resolv.conf from the generating environment.
+# The system should start out with an empty file.
+truncate -s 0 /etc/resolv.conf
+
+# clean-up
+echo "Removing random-seed so it's not the same in every image."
+rm -f /var/lib/random-seed
+
+echo "Removing /root/anaconda-ks.cfg"
+rm -f /root/anaconda-ks.cfg
 
 %end
 
