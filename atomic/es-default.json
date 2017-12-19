@@ -96,9 +96,6 @@
       "container-storage-setup"],
 
     "remove-from-packages": [["filesystem", "/usr/share/backgrounds"],
-                             ["escore-logos", "/usr/share/backgrounds",
-                                              "/usr/share/kde4",
-                                              "/usr/share/anaconda"],
                              ["systemd", "/usr/lib/tmpfiles.d/tmp.conf"],
                              ["rsyslog", "/etc/logrotate.d/syslog"],
                              ["ostree", "/usr/libexec/libostree/ostree-trivial-httpd"]],
