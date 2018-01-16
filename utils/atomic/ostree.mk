@@ -49,7 +49,7 @@ endif
 atomic_httpd: atomic_env_check  ##@atomic_prepare httpd
 ifeq (yes,$(OSTREE_REPO_SERVICE_IS_LOCAL))
 ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
-	ostree trivial-httpd -P ${OSTREE_SERV_PORT} ${OSTREE_REPO}/${OSTREE_REPO_NAME} & echo "$$!" > ${OSTREE_REPO}/trivial-httpd.pid
+	/usr/libexec/libostree/ostree-trivial-httpd -P ${OSTREE_SERV_PORT} ${OSTREE_REPO}/${OSTREE_REPO_NAME} & echo "$$!" > ${OSTREE_REPO}/trivial-httpd.pid
 else
 	$(warning ostree service started)
 endif
