@@ -1,0 +1,11 @@
+envrc
+atomic/es-atomic-host.json
+atomic/es-atomic-host-7.tdl
+atomic/es-atomic-host-7.ks
+atomic/es-atomic-config.ini
+atomic/escore-atomic.repo
+atomic/escore-docker.repo
+atomic/escore-easystack.repo
+atomic/escore-extras.repo
+atomic/escore-os.repo
+atomic/escore-updates.repo

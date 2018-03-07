@@ -2,10 +2,10 @@
     <name>rawhide</name>
     <os>
         <name>CentOS-7</name>
-        <version>3</version>
+        <version>4</version>
         <arch>x86_64</arch>
         <install type='url'>
-            <url>http://escore:escore@mirror.easystack.io/ESCL/7.3.1611/atomic/atomic-anaconda/</url>
+            <url>{{ ANACONDA_LIVECD }}</url>
         </install>
         <rootpw>rootroot</rootpw>
     </os>

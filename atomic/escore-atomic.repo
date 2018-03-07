@@ -1,7 +1,0 @@
-[escore-atomic]
-name=ESCore-7 - atomic
-baseurl=http://mirror.easystack.io/ESCL/vault.es/7.3.1611/atomic/x86_64/
-enabled=1
-gpgcheck=0
-username=escore
-password=escore

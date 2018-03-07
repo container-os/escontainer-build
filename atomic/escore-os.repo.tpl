@@ -1,6 +1,6 @@
-[escore-updates]
-name=ESCore-7 - updates
-baseurl=http://mirror.easystack.io/ESCL/vault.es/7.3.1611/updates/x86_64/
+[escore-os]
+name=ESCore-7 - os
+baseurl=http://mirror.easystack.io/ESCL/vault.es/{{ ESCLOUD_VER }}/os/x86_64/
 enabled=1
 gpgcheck=0
 username=escore

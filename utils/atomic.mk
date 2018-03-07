@@ -9,7 +9,8 @@ OSTREE_BUILD_SCRIPTS_DIR ?= $(shell pwd)/atomic
 OSTREE_REPO_REF ?= $(DEFAULT_OSTREE_REPO_REF)
 OSTREE_SERV_HOST ?= 192.168.122.1
 OSTREE_SERV_PORT ?= 11887
-
+ESCLOUD_VER ?= 7.4.1708
+ANACONDA_LIVECD ?= http://escore:escore@mirror.easystack.io/ESCL/7.4.1708/atomic/atomic-anaconda/
 FORCE_COMPOSE ?= no
 
 export
