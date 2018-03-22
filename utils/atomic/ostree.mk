@@ -70,6 +70,12 @@ atomic_compose: atomic_generate_tpl $(JSON_FILE) atomic_repo_init ##@atomic comp
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); rpm-ostree compose tree --repo ${OSTREE_REPO}/${OSTREE_REPO_NAME} es-atomic-host.json $(ARGS)
 	ostree summary -u --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} $(OSTREE_REPO_REF)
 
+atomic_call:
+	echo "ostree summary -u --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} $(OSTREE_REPO_REF)"
+
+atomic_summary:
+	ostree summary -u --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} $(OSTREE_REPO_REF)
+
 atomic_image: atomic_generate_tpl atomic_repo_init atomic_httpd  ##@atomic create image
 ifeq (00,$(LAST_BUILD_NUM))
 	$(error make atomic_prepare_image_dir first)
@@ -93,6 +99,10 @@ endif
 ifneq (0,$(SUDO_UID))
 	@chown -R $(SUDO_UID):$(SUDO_GID) $(OSTREE_IMGDIR)
 endif
+	@echo "glance image-create --name es-atomic-host-7_$(DATE)-$(NEXT_BUILD_NUM) --visibility public --disk-format qcow2 --container-format bare < $(OSTREE_IMGDIR)/images/es-atomic-host-7.qcow2"
+
+atomic_glance:
+	@echo "glance image-create --name es-atomic-host-7_$(DATE)-$(NEXT_BUILD_NUM) --visibility public --disk-format qcow2 < $(OSTREE_IMGDIR)/images/es-atomic-host-7.qcow2"
 
 atomic_image_gz: atomic_env_check  ##@atomic create image gz file, need run after make image
 ifeq (00,$(LAST_BUILD_NUM))

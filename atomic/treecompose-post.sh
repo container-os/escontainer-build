@@ -257,7 +257,7 @@ busybox rm -f /usr/sbin/blockdev
 busybox rm -f /usr/sbin/bootchartd
 busybox rm -f /usr/sbin/brctl
 busybox rm -f /usr/sbin/chat
-busybox rm -f /usr/sbin/chpasswd
+# busybox rm -f /usr/sbin/chpasswd
 busybox rm -f /usr/sbin/chroot
 # busybox rm -f /usr/sbin/crond
 busybox rm -f /usr/sbin/delgroup
