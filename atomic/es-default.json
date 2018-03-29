@@ -4,8 +4,7 @@
     "osname": "es-atomic-host",
     "ref": "es-atomic-host/7/x86_64/standard",
 
-    "repos": ["escore-os", "escore-updates", "escore-easystack",
-	      "escore-extras", "escore-atomic"],
+    "repos": ["escore-os", "escore-updates", "escore-extras", "escore-atomic"],
 
     "selinux": true,
 
