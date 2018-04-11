@@ -5,14 +5,18 @@ timezone --utc Etc/UTC
 
 auth --useshadow --passalgo=sha512
 selinux --enforcing
+
+{% if OSTREE_ROOT_LOCK|default("false") == "true" %}
 rootpw --lock --iscrypted locked
+{% else %}
+rootpw --plaintext {{ OSTREE_DEFAULT_PASSWORD }}
+{% endif %}
 
 {% if OSTREE_ENABLE_DEFAULT_USER|default("false") == "true" %}
-
 # set default user
-user --name=es --password=rootroot --groups=wheel
-
+user --name=es --password={{ OSTREE_DEFAULT_PASSWORD }} --groups=wheel
 {% endif %}
+
 firewall --disabled
 
 bootloader --timeout=1 --append="no_timer_check console=tty1 console=ttyS0,115200n8"
@@ -62,9 +66,22 @@ cp /etc/skel/.bash* /var/roothome
 # The system should start out with an empty file.
 truncate -s 0 /etc/resolv.conf
 
+{% if OSTREE_SSH_PASSWD == "true" %}
+sed -i '/^ssh_pwauth/s/0/1/ ; /^ssh_pwauth/s/false/true/' /etc/cloud/cloud.cfg
+{% endif %}
+
+{% if OSTREE_ROOT_LOCK|default("false") == "false" %}
+sed -i '/^disable_root/s/1/0/ ; /^disable_root/s/true/false/' /etc/cloud/cloud.cfg
+sed -i '/lock_passwd/s/true/false/' /etc/cloud/cloud.cfg
+{% endif %}
+
 # older versions of livecd-tools do not follow "rootpw --lock" line above
 # https://bugzilla.redhat.com/show_bug.cgi?id=964299
+
+{% if OSTREE_ROOT_LOCK|default("false") == "true" %}
 passwd -l root
+{% endif %}
+
 # remove the user anaconda forces us to make
 #userdel -r none
 
