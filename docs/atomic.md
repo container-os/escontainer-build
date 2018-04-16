@@ -42,4 +42,4 @@ https://wiki.centos.org/SpecialInterestGroup/Atomic/ReleaseSOP
 
 ### Contributing
 
-Discuss on https://github.com/easystack/escore-build
+Discuss on https://github.com/container-os/escontainer-build

@@ -10,7 +10,7 @@
 # OSTREE_REPO_REF = es-atomic-host/7/x86_64/standard 
 
 # specify the root path where the building scripts locate in.
-# OSTREE_BUILD_SCRIPTS_DIR = /srv/escore-build/atomic
+# OSTREE_BUILD_SCRIPTS_DIR = /srv/escontainer-build/atomic
 
 # specify the host and port of the remote ostree repository.
 # OSTREE_SERV_HOST = 192.168.122.1

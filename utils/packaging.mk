@@ -2,7 +2,7 @@ GITREV = $$(git describe --always --tags)
 GITREV_FOR_PKG = $(shell echo "$(GITREV)" | sed -e 's,-,\.,g' -e 's,^v,,')
 
 srcdir=$(shell pwd)
-PACKAGE=escore-build
+PACKAGE=escontainer-build
 
 PKG_VER = $(PACKAGE)-$(GITREV_FOR_PKG)
 
