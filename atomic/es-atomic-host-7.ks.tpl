@@ -46,13 +46,16 @@ reboot
 
 # Due to an anaconda bug (https://github.com/projectatomic/rpm-ostree/issues/42)
 # we need to install the repo here.
-# ostree remote delete es-atomic-host
-# ostree remote add --set=gpg-verify=false es-atomic-host 'http://192.168.122.1:57503'
+# We install our escnl public repo
+
+ostree remote delete es-atomic-host
+ostree remote add --set=gpg-verify=false es-atomic-host http://mirror.easystack.io/ESCL/7.4.1708/atomic/x86_64/repo/ es-atomic-host/7/x86_64/standard
 
 # For RHEL, it doesn't make sense to have a default remote configuration,
 # because you need to use subscription manager.
-rm /etc/ostree/remotes.d/*.conf
-#echo 'unconfigured-state=This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.' >> $(ostree admin --print-current-dir).origin
+# rm /etc/ostree/remotes.d/*.conf
+
+# echo 'unconfigured-state=This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.' >> $(ostree admin --print-current-dir).origin
 
 # Configure docker-storage-setup to resize the partition table on boot
 # https://github.com/projectatomic/docker-storage-setup/pull/25
