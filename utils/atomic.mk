@@ -16,6 +16,8 @@ OSTREE_ENABLE_DEFAULT_USER ?= false
 OSTREE_DEFAULT_PASSWORD ?= passw0rd
 OSTREE_ROOT_LOCK ?= false
 OSTREE_SSH_PASSWD ?= false
+OSTREE_SIGN_UID ?= admin@easystack.cn
+OSTREE_GPG_HOMEDIR ?= /root/.gnupg
 
 export
 
