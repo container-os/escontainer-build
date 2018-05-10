@@ -77,6 +77,9 @@ atomic_call:
 atomic_summary:
 	ostree summary -u --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} $(OSTREE_REPO_REF)
 
+atomic_rsync_to_mirror:
+	su - rpmostreecompose -c "./ostree-releng-scripts/rsync-repos --src ${OSTREE_REPO}/${OSTREE_REPO_NAME} --dest  mirror.easystack.io:/var/www/html/ESCNL/ostree --rsync-opt '-e ssh'"
+
 atomic_image: atomic_generate_tpl atomic_repo_init atomic_httpd  ##@atomic create image
 ifeq (00,$(LAST_BUILD_NUM))
 	$(error make atomic_prepare_image_dir first)
