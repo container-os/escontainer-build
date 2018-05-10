@@ -336,7 +336,7 @@ busybox rm -f /usr/sbin/remove-shell
 busybox rm -f /usr/sbin/route
 busybox rm -f /usr/sbin/rtcwake
 busybox rm -f /usr/sbin/runlevel
-busybox rm -f /usr/sbin/sendmail
+# busybox rm -f /usr/sbin/sendmail
 busybox rm -f /usr/sbin/setconsole
 busybox rm -f /usr/sbin/setfont
 busybox rm -f /usr/sbin/setlogcons
