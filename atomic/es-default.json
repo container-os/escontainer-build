@@ -92,7 +92,8 @@
       "pygobject3-base",
       "procps-ng",
       "easystack-storage-setup",
-      "container-storage-setup"],
+      "container-storage-setup",
+      "cronie"],
 
     "remove-from-packages": [["filesystem", "/usr/share/backgrounds"],
                              ["systemd", "/usr/lib/tmpfiles.d/tmp.conf"],

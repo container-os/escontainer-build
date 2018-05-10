@@ -36,7 +36,7 @@ busybox rm -f /usr/bin/comm
 busybox rm -f /usr/bin/conspy
 # busybox rm -f /usr/bin/cp
 # busybox rm -f /usr/bin/cpio
-busybox rm -f /usr/bin/crontab
+# busybox rm -f /usr/bin/crontab
 busybox rm -f /usr/bin/cryptpw
 busybox rm -f /usr/bin/cttyhack
 busybox rm -f /usr/bin/cut
