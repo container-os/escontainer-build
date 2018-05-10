@@ -103,6 +103,5 @@
     "default_target": "multi-user.target",
     "add-files": [["add-files/eslite.sh", "/usr/etc/profile.d/eslite.sh"],
                   ["add-files/tmp.conf", "/usr/lib/tmpfiles.d/tmp.conf"],
-                  ["add-files/syslog.logrotate.conf", "/usr/etc/logrotate.d/syslog"],
                   ["add-files/swap.conf", "/usr/lib/sysctl.d/60-swap.conf"]]
 }
