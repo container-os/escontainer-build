@@ -279,7 +279,7 @@ busybox rm -f /usr/sbin/fsck.minix
 busybox rm -f /usr/sbin/fstrim
 busybox rm -f /usr/sbin/ftpd
 busybox rm -f /usr/sbin/getty
-busybox rm -f /usr/sbin/halt
+# busybox rm -f /usr/sbin/halt
 busybox rm -f /usr/sbin/hdparm
 busybox rm -f /usr/sbin/httpd
 busybox rm -f /usr/sbin/hwclock
@@ -330,7 +330,7 @@ busybox rm -f /usr/sbin/rdate
 busybox rm -f /usr/sbin/rdev
 busybox rm -f /usr/sbin/readahead
 busybox rm -f /usr/sbin/readprofile
-busybox rm -f /usr/sbin/reboot
+# busybox rm -f /usr/sbin/reboot
 busybox rm -f /usr/sbin/remove-shell
 # busybox rm -f /usr/sbin/rmmod
 busybox rm -f /usr/sbin/route
