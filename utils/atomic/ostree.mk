@@ -26,7 +26,7 @@ atomic_env_prepare: atomic_generate_tpl  ##@atomic_prepare install ostree relate
 atomic_repo_init: atomic_env_check  ##@atomic_prepare repo_init
 ifeq (no,$(OSTREE_REPO_CREATED))
 	@mkdir -p ${OSTREE_REPO}
-	ostree --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} init --mode=archive-z2
+	ostree --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} init --mode=archive
 endif
 ifneq (0,$(SUDO_UID))
 	@chown $(SUDO_UID):$(SUDO_GID) $(OSTREE_REPO)
