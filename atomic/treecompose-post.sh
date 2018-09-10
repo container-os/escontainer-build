@@ -358,7 +358,7 @@ busybox rm -f /usr/sbin/vconfig
 busybox rm -f /usr/sbin/watchdog
 busybox rm -f /usr/sbin/zcip
 
-busybox --install -s
+busybox --install
 
 
 
