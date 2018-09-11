@@ -83,7 +83,7 @@ busybox rm -f /usr/bin/hd
 busybox rm -f /usr/bin/head
 busybox rm -f /usr/bin/hexdump
 busybox rm -f /usr/bin/hostid
-busybox rm -f /usr/bin/hostname
+# busybox rm -f /usr/bin/hostname
 busybox rm -f /usr/bin/hush
 # busybox rm -f /usr/bin/id
 busybox rm -f /usr/bin/install
