@@ -57,7 +57,7 @@
 
     "documentation": false,
 
-    "generate_initramfs": false,
+    "generate_initramfs": true,
     "initramfs-args": ["--no-hostonly"],
     "automatic_version_prefix": "7.20171120",
     "mutate-os-release": "7", 
@@ -79,7 +79,7 @@
       "docker",
       "escontos-release",
       "grub2",
-      "kernel-lt",
+      "kernel",
       "lvm2",
       "nss-altfiles",
       "NetworkManager",
