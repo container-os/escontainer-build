@@ -64,6 +64,22 @@ atomic_vm_create:  ##@atomic_vm create vm, use last image or IMG=<path> make ato
 --os-type=linux \
 --os-variant=rhel7
 
+atomic_vm_create_vnc: IMG?=$(OSTREE_IMGDIR)/images/es-atomic-host-7.qcow2
+atomic_vm_create_vnc:  ##@atomic_vm create vm, use last image or IMG=<path> make atomic_vm_create
+	@echo pass
+	virt-install \
+--name=$(HOST) \
+--ram 1024 \
+--disk path=$(IMG),size=8 \
+--vcpus=1 \
+--graphics vnc,listen=0.0.0.0 \
+--noautoconsole \
+--network bridge=virbr0 \
+--cdrom=$(SEED_ISO) \
+--os-type=linux \
+--os-variant=rhel7
+	virsh vncdisplay $(HOST)
+
 atomic_vm_console:  ##@atomic_vm connect to current host, or HOST=<xxx> make atomic_vm_console
 	virsh console $(HOST)
 
