@@ -91,7 +91,6 @@
       "openssh-server", "openssh-clients",
       "pygobject3-base",
       "procps-ng",
-      "easystack-storage-setup",
       "container-storage-setup",
       "cronie"],
 
