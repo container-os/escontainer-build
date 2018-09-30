@@ -68,8 +68,13 @@ atomic_httpd_stop: atomic_env_check  ##@atomic_prepare stop httpd
 
 atomic_compose: atomic_generate_tpl $(JSON_FILE) atomic_repo_init ##@atomic compose repo
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); rpm-ostree compose tree --repo ${OSTREE_REPO}/${OSTREE_REPO_NAME} es-atomic-host.json $(ARGS)
+ifneq (true, $(DEV))
 	ostree gpg-sign --gpg-homedir=${OSTREE_GPG_HOMEDIR} --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} $(OSTREE_REPO_REF) $(OSTREE_SIGN_UID)
+endif
 	ostree summary -u --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} $(OSTREE_REPO_REF)
+
+atomic_prod_compose:
+	PROD=true make atomic_compose
 
 atomic_call:
 	echo "ostree summary -u --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} $(OSTREE_REPO_REF)"

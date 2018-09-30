@@ -14,7 +14,9 @@ please see the detail comment for each entry in example file
 # export OSTREE_REPO_NAME=escontos
 # export OSTREE_BUILD_SCRIPTS_DIR=/opt/escontos-buildscripts
 
-make atomic_compose
+make atomic_compose >> for testing
+make atomic_prod_compose >> for production
+
 ```
 
 ### create guest image

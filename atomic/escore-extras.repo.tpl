@@ -1,8 +1,15 @@
 [escore-extras]
 name=ESCore-7 - extras
-baseurl=http://mirror.easystack.io/ESCL/{{ ESCLOUD_VER }}/extras/x86_64/
 enabled=1
 gpgcheck=0
+exclude=python-docker-py
+
+{% if PROD is defined %}
+baseurl=http://mirror.easystack.io/ESCL/{{ ESCLOUD_VER }}/extras/x86_64/
 username=escore
 password=escore
-exclude=python-docker-py
+{% else %}
+baseurl=http://mirror.easystack.io/mash/escl{{ ES_MAJOR_VER }}{{ ES_MINOR_VER }}-extras/x86_64/
+username=easystack
+password=passw0rd
+{% endif %}
