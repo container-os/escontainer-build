@@ -77,7 +77,7 @@
       "cloud-init",
       "cloud-utils-growpart",
       "docker",
-      "escontos-release",
+      "escore-release",
       "grub2",
       "kernel",
       "lvm2",
