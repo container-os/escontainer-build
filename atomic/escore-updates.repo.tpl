@@ -11,4 +11,3 @@ password=passw0rd
 {% endif %}
 enabled=1
 gpgcheck=0
-exclude=sed which hostname gawk xz net-tools vim-minimal diffutils crontabs grep iputils
