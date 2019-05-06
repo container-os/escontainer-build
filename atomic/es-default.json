@@ -77,6 +77,7 @@
       "cloud-init",
       "cloud-utils-growpart",
       "docker",
+      "docker-compose",
       "escore-release",
       "grub2",
       "kernel",
@@ -99,6 +100,7 @@
                              ["ostree", "/usr/libexec/libostree/ostree-trivial-httpd"]],
 
     "units": ["docker.service", "easystack-storage-setup.service"],
+
 
     "default_target": "multi-user.target",
     "add-files": [["add-files/eslite.sh", "/usr/etc/profile.d/eslite.sh"],
