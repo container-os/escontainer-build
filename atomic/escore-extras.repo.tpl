@@ -2,7 +2,7 @@
 name=ESCore-7 - extras
 enabled=1
 gpgcheck=0
-exclude=python-docker-py
+exclude=busybox
 
 {% if PROD is defined %}
 baseurl=http://mirror.easystack.io/ESCL/{{ ESCLOUD_VER }}/extras/x86_64/
