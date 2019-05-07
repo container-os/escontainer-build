@@ -30,13 +30,10 @@ zerombr
 clearpart --initlabel --all
 
 part /boot --size=300 --fstype="xfs"
-part pv.01 --size=8000
-part pv.02 --size=4000 --grow
+part pv.01 --size=8000 --grow
 volgroup atomicos pv.01
-volgroup docker pv.02
 
 logvol / --percent=100 --fstype="xfs" --name=root --vgname=atomicos
-logvol /var/lib/docker/overlay2 --percent=100 --fstype="xfs" --name=docker --vgname=docker
 
 # Equivalent of %include fedora-repo.ks
 ostreesetup --osname="{{ OSTREE_REPO_NAME }}" --remote="{{ OSTREE_REPO_NAME }}" --ref="{{ OSTREE_REPO_REF }}" --url="http://{{ OSTREE_SERV_HOST }}:{{OSTREE_SERV_PORT }}" --nogpg
