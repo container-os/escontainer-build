@@ -30,7 +30,7 @@ zerombr
 clearpart --initlabel --all
 
 part /boot --size=300 --fstype="xfs"
-part pv.01 --size=8000 --grow
+part pv.01 --size=1500 --grow
 volgroup atomicos pv.01
 
 logvol / --percent=100 --fstype="xfs" --name=root --vgname=atomicos

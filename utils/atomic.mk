@@ -21,6 +21,7 @@ ANACONDA_LIVECD ?= http://escore:escore@mirror.easystack.io/ESCL/7.4.1708/atomic
 FORCE_COMPOSE ?= no
 OSTREE_ENABLE_DEFAULT_USER ?= false
 OSTREE_DEFAULT_PASSWORD ?= passw0rd
+OSTREE_DISK_SIZE ?= 2
 OSTREE_ROOT_LOCK ?= false
 OSTREE_SSH_PASSWD ?= false
 OSTREE_SIGN_UID ?= admin@easystack.cn

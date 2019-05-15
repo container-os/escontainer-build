@@ -18,3 +18,4 @@
 
 # declare whether enable default user 'es' when building aotmic image host.
 # OSTREE_ENABLE_DEFAULT_USER = false
+# OSTREE_DISK_SIZE = 2  # it was 20, now change default as 3
