@@ -120,6 +120,10 @@ endif
 	gzip ${OSTREE_IMGDIR}/images/*.qcow2
 	cd ${OSTREE_IMGDIR}/images/; /bin/sh -c "find .  -type f | grep -v '.*SUMS$'' | xargs sha256sum" > SHA256SUMS
 
+atomic_image_raw:
+	LIBGUESTFS_BACKEND=direct; virt-sparsify -x ${OSTREE_IMGDIR}/images/es-atomic-host-7.qcow2  --convert raw --tmp /tmp ${OSTREE_IMGDIR}/images/es-atomic-host-7.raw
+	@echo raw image path: ${OSTREE_IMGDIR}/images/es-atomic-host-7.raw
+
 atomic_sign: GPGKEY?=00
 atomic_sign:  ##@atomic sign, GPGKEY=<> make atomic_sign
 ifeq (00,$(GPGKEY))
