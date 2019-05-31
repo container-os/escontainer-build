@@ -17,8 +17,8 @@ atomic_generate_tpl:  ##@atomic_prepare use envtpl.py to generate files
 
 atomic_env_prepare: atomic_generate_tpl  ##@atomic_prepare install ostree related packages
 	yum install -y yum-utils net-tools python-jinja2
-	curl https://raw.githubusercontent.com/projectatomic/centos-release-atomic-host-devel/master/RPM-GPG-KEY-CentOS-SIG-Atomic -o /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Atomic
-	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Atomic
+	#curl https://raw.githubusercontent.com/projectatomic/centos-release-atomic-host-devel/master/RPM-GPG-KEY-CentOS-SIG-Atomic -o /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Atomic
+	#rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Atomic
 	cp utils/atomic.repo /etc/yum.repos.d
 	#yum-config-manager --add-repo http://buildlogs.centos.org/centos/7/atomic/x86_64/Packages
 	#yum-config-manager --add-repo http://cbs.centos.org/repos/atomic7-testing/x86_64/os
