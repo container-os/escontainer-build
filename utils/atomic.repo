@@ -1,0 +1,5 @@
+[atomic]
+name=ESCore 7 x86_64 - atomic
+baseurl=http://mirror.easystack.cn/ESCL/7.4.1708/atomic/x86_64/                           
+enabled=1
+gpgcheck=0
