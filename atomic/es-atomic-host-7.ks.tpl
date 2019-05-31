@@ -47,7 +47,7 @@ reboot
 # We install our escnl public repo
 
 ostree remote delete es-atomic-host
-ostree remote add --set=gpg-verify=false es-atomic-host http://mirror.easystack.io/ESCL/7.4.1708/atomic/x86_64/repo/ es-atomic-host/7/x86_64/standard
+ostree remote add --set=gpg-verify=false es-atomic-host http://mirror.easystack.cn/ESCL/7.4.1708/atomic/x86_64/repo/ es-atomic-host/7/x86_64/standard
 
 # For RHEL, it doesn't make sense to have a default remote configuration,
 # because you need to use subscription manager.
