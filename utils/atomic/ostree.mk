@@ -23,7 +23,7 @@ atomic_env_prepare: atomic_generate_tpl  ##@atomic_prepare install ostree relate
 	#yum-config-manager --add-repo http://buildlogs.centos.org/centos/7/atomic/x86_64/Packages
 	#yum-config-manager --add-repo http://cbs.centos.org/repos/atomic7-testing/x86_64/os
 	#yum-config-manager --disable cbs.centos.org_repos_atomic7-testing_x86_64_os_
-	yum install -y ostree-2017.14-2.atomic.es.x86_64 rpm-ostree-2017.11.2.g079734c-1.atomic.es.x86_64.rpm rpm-ostree-toolbox-2017.2-1.el7.centos.x86_64
+	yum install -y ostree-2017.14-2.atomic.es.x86_64 rpm-ostree-2017.11.2.g079734c-1.atomic.es.x86_64 rpm-ostree-toolbox-2017.2-1.el7.centos.x86_64
 
 atomic_repo_init: atomic_env_check  ##@atomic_prepare repo_init
 ifeq (no,$(OSTREE_REPO_CREATED))
