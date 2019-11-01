@@ -52,6 +52,7 @@ atomic_httpd: atomic_env_check  ##@atomic_prepare httpd
 ifeq (yes,$(OSTREE_REPO_SERVICE_IS_LOCAL))
 ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
 	/usr/libexec/libostree/ostree-trivial-httpd -P ${OSTREE_SERV_PORT} ${OSTREE_REPO}/${OSTREE_REPO_NAME} & echo "$$!" > ${OSTREE_REPO}/trivial-httpd.pid
+	python -m SimpleHTTPServer 8800 & echo "$$!" >  ${OSTREE_REPO}/simple-httpd.pid
 else
 	$(warning ostree service started)
 endif
@@ -67,6 +68,8 @@ endif
 atomic_httpd_stop: atomic_env_check  ##@atomic_prepare stop httpd
 	@kill -9 `cat ${OSTREE_REPO}/trivial-httpd.pid`
 	@rm ${OSTREE_REPO}/trivial-httpd.pid
+	@kill -9 `cat ${OSTREE_REPO}/simple-httpd.pid`
+	@rm ${OSTREE_REPO}/simple-httpd.pid
 
 atomic_compose: atomic_generate_tpl $(JSON_FILE) atomic_repo_init ##@atomic compose repo
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); rpm-ostree compose tree --repo ${OSTREE_REPO}/${OSTREE_REPO_NAME} es-atomic-host.json $(ARGS)
