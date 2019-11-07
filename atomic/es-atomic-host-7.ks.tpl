@@ -32,8 +32,8 @@ clearpart --initlabel --all
 part /boot --size=300 --fstype="xfs"
 #part pv.01 --size=1500 --grow
 
-part pv.01 --size=6000
-part pv.02 --size=3000 --grow
+part pv.01 --size=6500
+part pv.02 --size=3500 --grow
 
 volgroup docker pv.01
 volgroup atomicos pv.02
