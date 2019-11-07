@@ -16,12 +16,14 @@ atomic_generate_tpl:  ##@atomic_prepare use envtpl.py to generate files
 	@find atomic/ -name *.tpl -exec ./utils/envtpl.py --keep-template {} \;
 
 atomic_env_prepare: atomic_generate_tpl  ##@atomic_prepare install ostree related packages
-	yum install -y yum-utils
-	yum-config-manager --add-repo http://buildlogs.centos.org/centos/7/atomic/x86_64/Packages
-	yum-config-manager --add-repo http://cbs.centos.org/repos/atomic7-testing/x86_64/os
-	yum-config-manager --disable cbs.centos.org_repos_atomic7-testing_x86_64_os_
-	yum install -y rpm-ostree
-	yum install -y rpm-ostree-toolbox --enablerepo=cbs.centos.org_repos_atomic7-testing_x86_64_os_ --nogpgcheck
+	yum install -y yum-utils net-tools python-jinja2
+	#curl https://raw.githubusercontent.com/projectatomic/centos-release-atomic-host-devel/master/RPM-GPG-KEY-CentOS-SIG-Atomic -o /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Atomic
+	#rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Atomic
+	cp utils/atomic.repo /etc/yum.repos.d
+	#yum-config-manager --add-repo http://buildlogs.centos.org/centos/7/atomic/x86_64/Packages
+	#yum-config-manager --add-repo http://cbs.centos.org/repos/atomic7-testing/x86_64/os
+	#yum-config-manager --disable cbs.centos.org_repos_atomic7-testing_x86_64_os_
+	yum install -y ostree-2017.14-2.atomic.es.x86_64 rpm-ostree-2017.11.2.g079734c-1.atomic.es.x86_64 rpm-ostree-toolbox-2017.2-1.el7.centos.x86_64
 
 atomic_repo_init: atomic_env_check  ##@atomic_prepare repo_init
 ifeq (no,$(OSTREE_REPO_CREATED))
@@ -47,9 +49,11 @@ endif
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); ln -s -f $(JSON_FILE) es-atomic-host.json
 
 atomic_httpd: atomic_env_check  ##@atomic_prepare httpd
+	./http-simple & echo "$$!" >  ${OSTREE_REPO}/simple-httpd.pid # port 8800, atomic/add-files
 ifeq (yes,$(OSTREE_REPO_SERVICE_IS_LOCAL))
 ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
 	/usr/libexec/libostree/ostree-trivial-httpd -P ${OSTREE_SERV_PORT} ${OSTREE_REPO}/${OSTREE_REPO_NAME} & echo "$$!" > ${OSTREE_REPO}/trivial-httpd.pid
+	# python -m SimpleHTTPServer 8800 & echo "$$!" >  ${OSTREE_REPO}/simple-httpd.pid
 else
 	$(warning ostree service started)
 endif
@@ -65,6 +69,8 @@ endif
 atomic_httpd_stop: atomic_env_check  ##@atomic_prepare stop httpd
 	@kill -9 `cat ${OSTREE_REPO}/trivial-httpd.pid`
 	@rm ${OSTREE_REPO}/trivial-httpd.pid
+	@kill -9 `cat ${OSTREE_REPO}/simple-httpd.pid`
+	@rm ${OSTREE_REPO}/simple-httpd.pid
 
 atomic_compose: atomic_generate_tpl $(JSON_FILE) atomic_repo_init ##@atomic compose repo
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); rpm-ostree compose tree --repo ${OSTREE_REPO}/${OSTREE_REPO_NAME} es-atomic-host.json $(ARGS)
@@ -83,7 +89,7 @@ atomic_summary:
 	ostree summary -u --repo=${OSTREE_REPO}/${OSTREE_REPO_NAME} $(OSTREE_REPO_REF)
 
 atomic_rsync_to_mirror:
-	su - rpmostreecompose -c "./ostree-releng-scripts/rsync-repos --src ${OSTREE_REPO}/${OSTREE_REPO_NAME} --dest  mirror.easystack.io:/var/www/html/ESCNL/ostree --rsync-opt '-e ssh'"
+	su - rpmostreecompose -c "./ostree-releng-scripts/rsync-repos --src ${OSTREE_REPO}/${OSTREE_REPO_NAME} --dest  mirror.easystack.cn:/var/www/html/ESCNL/ostree --rsync-opt '-e ssh'"
 
 atomic_image: atomic_generate_tpl atomic_repo_init atomic_httpd  ##@atomic create image
 ifeq (00,$(LAST_BUILD_NUM))
@@ -119,6 +125,10 @@ ifeq (00,$(LAST_BUILD_NUM))
 endif
 	gzip ${OSTREE_IMGDIR}/images/*.qcow2
 	cd ${OSTREE_IMGDIR}/images/; /bin/sh -c "find .  -type f | grep -v '.*SUMS$'' | xargs sha256sum" > SHA256SUMS
+
+atomic_image_raw:
+	LIBGUESTFS_BACKEND=direct; virt-sparsify -x ${OSTREE_IMGDIR}/images/es-atomic-host-7.qcow2  --convert raw --tmp /tmp ${OSTREE_IMGDIR}/images/es-atomic-host-7.raw
+	@echo raw image path: ${OSTREE_IMGDIR}/images/es-atomic-host-7.raw
 
 atomic_sign: GPGKEY?=00
 atomic_sign:  ##@atomic sign, GPGKEY=<> make atomic_sign

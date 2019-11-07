@@ -30,10 +30,17 @@ zerombr
 clearpart --initlabel --all
 
 part /boot --size=300 --fstype="xfs"
-part pv.01 --size=8000 --grow
+#part pv.01 --size=1500 --grow
+
+part pv.01 --size=8000
+part pv.02 --size=4000 --grow
+
 volgroup atomicos pv.01
+volgroup docker pv.02
 
 logvol / --percent=100 --fstype="xfs" --name=root --vgname=atomicos
+logvol /var/lib/docker --percent=5 --fstype="xfs" --name=docker --vgname=docker
+
 
 # Equivalent of %include fedora-repo.ks
 ostreesetup --osname="{{ OSTREE_REPO_NAME }}" --remote="{{ OSTREE_REPO_NAME }}" --ref="{{ OSTREE_REPO_REF }}" --url="http://{{ OSTREE_SERV_HOST }}:{{OSTREE_SERV_PORT }}" --nogpg
@@ -47,7 +54,7 @@ reboot
 # We install our escnl public repo
 
 ostree remote delete es-atomic-host
-ostree remote add --set=gpg-verify=false es-atomic-host http://mirror.easystack.io/ESCL/7.4.1708/atomic/x86_64/repo/ es-atomic-host/7/x86_64/standard
+ostree remote add --set=gpg-verify=false es-atomic-host http://mirror.easystack.cn/ESCL/7.4.1708/atomic/x86_64/repo/ es-atomic-host/7/x86_64/standard
 
 # For RHEL, it doesn't make sense to have a default remote configuration,
 # because you need to use subscription manager.
@@ -180,7 +187,14 @@ rm -f /root/anaconda-ks.cfg
 # -rw-r--r--. root root unconfined_u:object_r:passwd_file_t:s0 /etc/.pwd.lock
 # -rwxr-xr-x. root root system_u:object_r:passwd_exec_t:s0 /usr/sbin/chpasswd
 
+echo STORAGE_DRIVER=overlay2 >> /etc/sysconfig/docker-storage-setup
+
 touch /etc/.pwd.lock
+touch /etc/.docker.dd.log
 
+systemctl stop docker
+umount /dev/mapper/docker-docker
+mkfs.xfs -f /dev/mapper/docker-docker
+
+curl http://192.168.122.1:8800/docker.dd.gz | gzip -dc | dd of=/dev/mapper/docker-docker bs=64K
 %end
-

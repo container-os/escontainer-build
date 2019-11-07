@@ -10,7 +10,7 @@
         <rootpw>rootroot</rootpw>
     </os>
     <disk>
-      <size>20</size>
+      <size>{{ OSTREE_DISK_SIZE }}</size>
     </disk>
 </template>
 
