@@ -36,13 +36,13 @@ part /boot/efi --size=80 --fstype="efi"
 
 part /boot --size=300 --fstype="xfs"
 
-part pv.01 --size=5000
-part pv.02 --size=4000 --grow
+part pv.01 --size=6200
+part pv.02 --size=3800 --grow
 
 bootloader --timeout=1 --append="no_timer_check console=tty1 console=ttyS0,115200n8"
  
-volgroup atomicos pv.01
-volgroup docker pv.02
+volgroup docker pv.01
+volgroup atomicos pv.02
 
 logvol / --percent=100 --fstype="xfs" --name=root --vgname=atomicos
 logvol /var/lib/docker --percent=5 --fstype="xfs" --name=docker --vgname=docker
