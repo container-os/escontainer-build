@@ -1,5 +1,5 @@
 #!/bin/sh
-growpart /dev/vda 2
-pvresize /dev/vda2
+growpart /dev/vda 3
+pvresize /dev/vda3
 lvextend -l 100%FREE  /dev/atomicos/root
 xfs_growfs /dev/atomicos/root

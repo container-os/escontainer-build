@@ -32,11 +32,11 @@ clearpart --initlabel --all
 part /boot --size=300 --fstype="xfs"
 #part pv.01 --size=1500 --grow
 
-part pv.01 --size=8000
-part pv.02 --size=4000 --grow
+part pv.01 --size=6000
+part pv.02 --size=3000 --grow
 
-volgroup atomicos pv.01
-volgroup docker pv.02
+volgroup docker pv.01
+volgroup atomicos pv.02
 
 logvol / --percent=100 --fstype="xfs" --name=root --vgname=atomicos
 logvol /var/lib/docker --percent=5 --fstype="xfs" --name=docker --vgname=docker
@@ -196,5 +196,5 @@ systemctl stop docker
 umount /dev/mapper/docker-docker
 mkfs.xfs -f /dev/mapper/docker-docker
 
-curl http://192.168.122.1:8800/docker.dd.gz | gzip -dc | dd of=/dev/mapper/docker-docker bs=64K
+# curl http://192.168.122.1:8800/docker.dd.gz | gzip -dc | dd of=/dev/mapper/docker-docker bs=64K
 %end
