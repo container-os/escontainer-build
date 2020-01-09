@@ -196,5 +196,5 @@ systemctl stop docker
 umount /dev/mapper/docker-docker
 mkfs.xfs -f /dev/mapper/docker-docker
 
-curl http://192.168.122.1:8800/docker.dd.gz | gzip -dc | dd of=/dev/mapper/docker-docker bs=64K
+curl http://{{ OSTREE_SERV_HOST }}:8800/docker.dd.gz | gzip -dc | dd of=/dev/mapper/docker-docker bs=64K
 %end

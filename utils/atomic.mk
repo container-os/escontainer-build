@@ -5,19 +5,16 @@ ifeq (true, $(PROD))
 undefine DEV
 endif
 
-DEFAULT_OSTREE_REPO_REF = es-atomic-host/7/x86_64/standard
 DEFAULT_HOST = es-atomic-host
 
 OSTREE_REPO ?= /srv/ostree
 OSTREE_REPO_NAME ?= es-atomic-host
 OSTREE_BUILD_SCRIPTS_DIR ?= $(shell pwd)/atomic
-OSTREE_REPO_REF ?= $(DEFAULT_OSTREE_REPO_REF)
-OSTREE_SERV_HOST ?= 192.168.122.1
 OSTREE_SERV_PORT ?= 11887
 ESCLOUD_VER ?= 7.4.1708
 ES_MAJOR_VER ?= 7
 ES_MINOR_VER ?= 4
-ANACONDA_LIVECD ?= http://escore:escore@mirror.easystack.cn/ESCL/7.4.1708/atomic/atomic-anaconda/
+ANACONDA_LIVECD ?= http://escore:escore@mirror.easystack.cn/mirrors/centos/7/os/$(ARCH)/
 FORCE_COMPOSE ?= no
 OSTREE_ENABLE_DEFAULT_USER ?= false
 OSTREE_DEFAULT_PASSWORD ?= passw0rd

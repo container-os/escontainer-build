@@ -49,7 +49,8 @@ endif
 	@cd $(OSTREE_BUILD_SCRIPTS_DIR); ln -s -f $(JSON_FILE) es-atomic-host.json
 
 atomic_httpd: atomic_env_check  ##@atomic_prepare httpd
-	./http-simple & echo "$$!" >  ${OSTREE_REPO}/simple-httpd.pid # port 8800, atomic/add-files
+	#./http-simple & echo "$$!" >  ${OSTREE_REPO}/simple-httpd.pid # port 8800, atomic/add-files
+	python -m SimpleHTTPServer 8800 & echo "$$!" >  ${OSTREE_REPO}/simple-httpd.pid
 ifeq (yes,$(OSTREE_REPO_SERVICE_IS_LOCAL))
 ifeq (no,$(OSTREE_REPO_SERVICE_STARTED))
 	/usr/libexec/libostree/ostree-trivial-httpd -P ${OSTREE_SERV_PORT} ${OSTREE_REPO}/${OSTREE_REPO_NAME} & echo "$$!" > ${OSTREE_REPO}/trivial-httpd.pid

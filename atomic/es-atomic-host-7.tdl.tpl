@@ -3,7 +3,7 @@
     <os>
         <name>CentOS-7</name>
         <version>4</version>
-        <arch>x86_64</arch>
+        <arch>{{ ARCH }}</arch>
         <install type='url'>
             <url>{{ ANACONDA_LIVECD }}</url>
         </install>
