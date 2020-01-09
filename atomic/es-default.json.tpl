@@ -2,7 +2,7 @@
     "comment": "Easystack Atomic host",
 
     "osname": "es-atomic-host",
-    "ref": "es-atomic-host/5/aarch64/standard",
+    "ref": "es-atomic-host/5/{{ ARCH }}/standard",
 
     "repos": [
         "ecs-atomic"],
@@ -73,7 +73,9 @@
     "check-groups": { "type": "file", "filename": "group" },
 
     "packages": [
-
+{% if ARCH == "x86_64" %}
+      "biosdevname",
+{% endif %}
       "atomic",
       "glibc", "nss-altfiles", "shadow-utils",
       "runc",

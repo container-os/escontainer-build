@@ -3,6 +3,8 @@ ifeq (yes,$(shell test -e envrc && echo "yes" || echo "no"))
 else
     $(warning envrc not found. help: copy envrc.example and edit it)
 endif
+ARCH ?= $(shell arch)
+
 
 include utils/help.mk
 #ifeq (yes,$(shell test -e /usr/bin/git && test -d .git && echo "yes" || echo "no"))
