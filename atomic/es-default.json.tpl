@@ -62,7 +62,7 @@
 
     "automatic_version_prefix": "7.20171120",
 
-    "mutate-os-release": "7", 
+    "mutate-os-release": "{{ ECS_VER }}", 
     "postprocess-script": "treecompose-post.sh",
 
     "etc-group-members": ["wheel", "docker"],

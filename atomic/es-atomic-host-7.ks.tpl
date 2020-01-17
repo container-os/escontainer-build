@@ -29,12 +29,13 @@ services --disabled=network,avahi-daemon
 zerombr
 clearpart --initlabel --all
 
+part /boot/efi --size=80 --fstype="efi"
 part /boot --size=300 --fstype="xfs"
 #part pv.01 --size=1500 --grow
 
 part pv.01 --size=8000
 part pv.02 --size=4000 --grow
-
+ 
 volgroup atomicos pv.01
 volgroup docker pv.02
 
@@ -53,8 +54,8 @@ reboot
 # we need to install the repo here.
 # We install our escnl public repo
 
-ostree remote delete es-atomic-host
-ostree remote add --set=gpg-verify=false es-atomic-host http://mirror.easystack.cn/ESCL/7.4.1708/atomic/x86_64/repo/ es-atomic-host/7/x86_64/standard
+# ostree remote delete es-atomic-host
+# ostree remote add --set=gpg-verify=false es-atomic-host http://mirror.easystack.cn/ESCL/7.4.1708/atomic/x86_64/repo/ es-atomic-host/7/x86_64/standard
 
 # For RHEL, it doesn't make sense to have a default remote configuration,
 # because you need to use subscription manager.
@@ -196,5 +197,4 @@ systemctl stop docker
 umount /dev/mapper/docker-docker
 mkfs.xfs -f /dev/mapper/docker-docker
 
-curl http://{{ OSTREE_SERV_HOST }}:8800/docker.dd.gz | gzip -dc | dd of=/dev/mapper/docker-docker bs=64K
 %end

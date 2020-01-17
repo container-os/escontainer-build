@@ -14,11 +14,15 @@ OSTREE_SERV_PORT ?= 11887
 ESCLOUD_VER ?= 7.4.1708
 ES_MAJOR_VER ?= 7
 ES_MINOR_VER ?= 4
-ANACONDA_LIVECD ?= http://escore:escore@mirror.easystack.cn/mirrors/centos/7/os/$(ARCH)/
+
+CENTOS_VER ?= 7
+ECS_VER = 5
+ANACONDA_LIVECD ?= http://escore:escore@mirror.easystack.cn/mirrors/centos/$(CENTOS_VER)/os/$(ARCH)/
+# ANACONDA_LIVECD ?= http://escore:escore@mirror.easystack.cn/cubes/atomic/$(ECS_VER)/$(ARCH)/
 FORCE_COMPOSE ?= no
 OSTREE_ENABLE_DEFAULT_USER ?= false
 OSTREE_DEFAULT_PASSWORD ?= passw0rd
-OSTREE_DISK_SIZE ?= 20
+OSTREE_DISK_SIZE ?= 15
 OSTREE_ROOT_LOCK ?= false
 OSTREE_SSH_PASSWD ?= false
 OSTREE_SIGN_UID ?= admin@easystack.cn
@@ -56,7 +60,7 @@ JSON_FILE = $(OSTREE_IMGDIR)/seed/atomic.json
 include utils/atomic/ostree.mk
 include utils/atomic/vm.mk
 
-atomic_json:  ##@atomic_debug force generate json
+atomic_json: atomic_generate_tpl ##@atomic_debug force generate json
 	rm -f $(JSON_FILE)
 	make $(JSON_FILE)
 
