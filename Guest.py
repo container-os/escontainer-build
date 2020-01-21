@@ -767,7 +767,7 @@ class Guest(object):
                 raise oz.OzException.OzException("Unknown libvirt error")
 
     def _wait_for_install_finish(self, libvirt_dom, count,
-                                 inactivity_timeout=300):
+                                 inactivity_timeout=30000):
         """
         Method to wait for an installation to finish.  This will wait around
         until either the VM has gone away (at which point it is assumed the
@@ -827,11 +827,11 @@ class Guest(object):
             # if we timed out, then let's make sure to take a screenshot.
             screenshot_text = self._capture_screenshot(libvirt_dom)
             raise oz.OzException.OzException("Timed out waiting for install to finish.  %s" % (screenshot_text))
-        elif inactivity_countdown == 0:
-            # if we saw no disk or network activity in the countdown window,
-            # we presume the install has hung.  Fail here
-            screenshot_text = self._capture_screenshot(libvirt_dom)
-            raise oz.OzException.OzException("No disk activity in %d seconds, failing.  %s" % (inactivity_timeout, screenshot_text))
+        # elif inactivity_countdown == 0:
+        #     # if we saw no disk or network activity in the countdown window,
+        #     # we presume the install has hung.  Fail here
+        #     screenshot_text = self._capture_screenshot(libvirt_dom)
+        #     raise oz.OzException.OzException("No disk activity in %d seconds, failing.  %s" % (inactivity_timeout, screenshot_text))
 
         # We get here only if we got a libvirt exception
         self._wait_for_clean_shutdown(libvirt_dom, saved_exception)
