@@ -19,7 +19,7 @@ user --name=es --password={{ OSTREE_DEFAULT_PASSWORD }} --groups=wheel
 
 firewall --disabled
 
-bootloader --timeout=1 --append="no_timer_check console=tty1 console=ttyS0,115200n8"
+#bootloader --timeout=1 --append="no_timer_check console=tty1 console=ttyS0,115200n8"
 
 network --bootproto=dhcp --onboot=on --device=eth0 --activate
 services --enabled=sshd,rsyslog,cloud-init,cloud-init-local,cloud-config,cloud-final
@@ -28,13 +28,18 @@ services --disabled=network,avahi-daemon
 
 zerombr
 clearpart --initlabel --all
+reqpart --add-boot
 
+{% if ARCH == "aarch64" %}
 part /boot/efi --size=80 --fstype="efi"
-part /boot --size=300 --fstype="xfs"
-#part pv.01 --size=1500 --grow
+{% endif %}
 
-part pv.01 --size=8000
+part /boot --size=300 --fstype="xfs"
+
+part pv.01 --size=5000
 part pv.02 --size=4000 --grow
+
+bootloader --timeout=1 --append="no_timer_check console=tty1 console=ttyS0,115200n8"
  
 volgroup atomicos pv.01
 volgroup docker pv.02
@@ -42,9 +47,9 @@ volgroup docker pv.02
 logvol / --percent=100 --fstype="xfs" --name=root --vgname=atomicos
 logvol /var/lib/docker --percent=5 --fstype="xfs" --name=docker --vgname=docker
 
-
 # Equivalent of %include fedora-repo.ks
 ostreesetup --osname="{{ OSTREE_REPO_NAME }}" --remote="{{ OSTREE_REPO_NAME }}" --ref="{{ OSTREE_REPO_REF }}" --url="http://{{ OSTREE_SERV_HOST }}:{{OSTREE_SERV_PORT }}" --nogpg
+
 
 reboot
 
@@ -191,7 +196,6 @@ rm -f /root/anaconda-ks.cfg
 echo STORAGE_DRIVER=overlay2 >> /etc/sysconfig/docker-storage-setup
 
 touch /etc/.pwd.lock
-touch /etc/.docker.dd.log
 
 systemctl stop docker
 umount /dev/mapper/docker-docker

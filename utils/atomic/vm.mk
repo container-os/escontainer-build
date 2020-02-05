@@ -13,7 +13,7 @@ USER_DATA = $(SEED)/user-data
 
 
 # "virsh dominfo obsx" check vm instance status
-HOST ?= $(DEFAULT_HOST)_${DATE}-${LAST_BUILD_NUM}
+HOST ?= $(DEFAULT_HOST)-$(ECS_VER)_${DATE}-${LAST_BUILD_NUM}
 PASSWORD ?= passw0rd
 
 $(SEED):
@@ -49,7 +49,7 @@ ifeq (yes,$(shell test -e $(OSTREE_IMGDIR)/images && echo yes || echo no))
 	@mkdir -p $(OSTREE_NEXT_IMGDIR)
 endif
 
-atomic_vm_create: IMG?=$(OSTREE_IMGDIR)/images/es-atomic-host-7.qcow2
+atomic_vm_create: IMG?=$(OSTREE_IMGDIR)/images/$(DEFAULT_HOST)-$(ECS_VER).qcow2
 atomic_vm_create:  ##@atomic_vm create vm, use last image or IMG=<path> make atomic_vm_create
 	@echo pass
 	virt-install \
