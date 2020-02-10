@@ -19,7 +19,7 @@ user --name=es --password={{ OSTREE_DEFAULT_PASSWORD }} --groups=wheel
 
 firewall --disabled
 
-bootloader --timeout=1 --append="no_timer_check console=tty1 console=ttyS0,115200n8"
+#bootloader --timeout=1 --append="no_timer_check console=tty1 console=ttyS0,115200n8"
 
 network --bootproto=dhcp --onboot=on --device=eth0 --activate
 services --enabled=sshd,rsyslog,cloud-init,cloud-init-local,cloud-config,cloud-final
@@ -28,22 +28,28 @@ services --disabled=network,avahi-daemon
 
 zerombr
 clearpart --initlabel --all
+reqpart --add-boot
+
+{% if ARCH == "aarch64" %}
+part /boot/efi --size=80 --fstype="efi"
+{% endif %}
 
 part /boot --size=300 --fstype="xfs"
-#part pv.01 --size=1500 --grow
 
-part pv.01 --size=8000
-part pv.02 --size=4000 --grow
+part pv.01 --size=6200
+part pv.02 --size=3800 --grow
 
-volgroup atomicos pv.01
-volgroup docker pv.02
+bootloader --timeout=1 --append="no_timer_check console=tty1 console=ttyS0,115200n8"
+ 
+volgroup docker pv.01
+volgroup atomicos pv.02
 
 logvol / --percent=100 --fstype="xfs" --name=root --vgname=atomicos
 logvol /var/lib/docker --percent=5 --fstype="xfs" --name=docker --vgname=docker
 
-
 # Equivalent of %include fedora-repo.ks
 ostreesetup --osname="{{ OSTREE_REPO_NAME }}" --remote="{{ OSTREE_REPO_NAME }}" --ref="{{ OSTREE_REPO_REF }}" --url="http://{{ OSTREE_SERV_HOST }}:{{OSTREE_SERV_PORT }}" --nogpg
+
 
 reboot
 
@@ -53,8 +59,8 @@ reboot
 # we need to install the repo here.
 # We install our escnl public repo
 
-ostree remote delete es-atomic-host
-ostree remote add --set=gpg-verify=false es-atomic-host http://mirror.easystack.cn/ESCL/7.4.1708/atomic/x86_64/repo/ es-atomic-host/7/x86_64/standard
+# ostree remote delete es-atomic-host
+# ostree remote add --set=gpg-verify=false es-atomic-host http://mirror.easystack.cn/ESCL/7.4.1708/atomic/x86_64/repo/ es-atomic-host/7/x86_64/standard
 
 # For RHEL, it doesn't make sense to have a default remote configuration,
 # because you need to use subscription manager.
@@ -190,11 +196,9 @@ rm -f /root/anaconda-ks.cfg
 echo STORAGE_DRIVER=overlay2 >> /etc/sysconfig/docker-storage-setup
 
 touch /etc/.pwd.lock
-touch /etc/.docker.dd.log
 
 systemctl stop docker
 umount /dev/mapper/docker-docker
 mkfs.xfs -f /dev/mapper/docker-docker
 
-curl http://{{ OSTREE_SERV_HOST }}:8800/docker.dd.gz | gzip -dc | dd of=/dev/mapper/docker-docker bs=64K
 %end

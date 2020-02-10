@@ -16,6 +16,9 @@ atomic_generate_tpl:  ##@atomic_prepare use envtpl.py to generate files
 	@find atomic/ -name *.tpl -exec ./utils/envtpl.py --keep-template {} \;
 
 atomic_env_prepare: atomic_generate_tpl  ##@atomic_prepare install ostree related packages
+ifeq (aarch64,$(ARCH))
+	cp Guest.py /usr/lib/python2.7/site-packages/oz/Guest.py
+endif
 	yum install -y yum-utils net-tools python-jinja2
 	#curl https://raw.githubusercontent.com/projectatomic/centos-release-atomic-host-devel/master/RPM-GPG-KEY-CentOS-SIG-Atomic -o /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Atomic
 	#rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Atomic
